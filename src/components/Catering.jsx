@@ -2,11 +2,13 @@ import React from "react";
 import { Btn, Eyebrow, Sticker } from "./atoms.jsx";
 import { BubbySays, SeedScatter } from "./fun.jsx";
 import { useStoreOpen } from "../hooks/useStoreOpen.js";
+import { useIsMobile } from "../hooks/useIsMobile.js";
 
 const CATERING_PDF = "https://www.bubbysbagels.com/_files/ugd/88e84c_4501928e665a4cc8878a32da3a2001e1.pdf";
 
 export function Catering() {
   const { catering } = useStoreOpen();
+  const isMobile = useIsMobile();
   const tiers = [
     {
       name: "The Schmooze",
@@ -39,7 +41,13 @@ export function Catering() {
     <section id="catering" style={{ padding: "120px 0 80px", background: "var(--ink)", color: "var(--paper)", position: "relative", overflow: "hidden" }}>
       <SeedScatter count={80} color="var(--mustard)" style={{ opacity: .35 }} />
       <div className="wrap" style={{ position: "relative", zIndex: 1 }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "end", marginBottom: 60 }}>
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
+          gap: isMobile ? 28 : 60,
+          alignItems: isMobile ? "stretch" : "end",
+          marginBottom: isMobile ? 40 : 60,
+        }}>
           <div>
             <Eyebrow num="N° 05"><span style={{ color: "var(--paper)" }}>Feed the whole mishpacha</span></Eyebrow>
             <h2 className="h-section" style={{ marginTop: 18, color: "var(--paper)" }}>
@@ -97,7 +105,11 @@ export function Catering() {
           </BubbySays>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }}>
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)",
+          gap: isMobile ? 28 : 24,
+        }}>
           {tiers.map((t) => (
             <div key={t.name} style={{
               position: "relative",
@@ -107,7 +119,7 @@ export function Catering() {
               borderRadius: 22,
               padding: 32,
               boxShadow: t.featured ? "8px 8px 0 var(--mustard)" : "none",
-              transform: t.featured ? "translateY(-12px)" : "none",
+              transform: !isMobile && t.featured ? "translateY(-12px)" : "none",
               display: "flex", flexDirection: "column", gap: 16,
             }}>
               {t.featured && (

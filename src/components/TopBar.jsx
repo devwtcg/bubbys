@@ -1,12 +1,27 @@
 import React from "react";
+import { useIsMobile } from "../hooks/useIsMobile.js";
+
+const NAV = [
+  ["Bagels", "#menu"],
+  ["Sandwiches", "#sandwiches"],
+  ["Catering", "#catering"],
+  ["Our Story", "#story"],
+  ["Find Us", "#locations"],
+];
 
 export function TopBar({ cartCount, onCartClick }) {
   const [scrolled, setScrolled] = React.useState(false);
+  const [menuOpen, setMenuOpen] = React.useState(false);
+  const isMobile = useIsMobile();
+
   React.useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", fn);
     return () => window.removeEventListener("scroll", fn);
   }, []);
+
+  // Close drawer on resize back to desktop
+  React.useEffect(() => { if (!isMobile) setMenuOpen(false); }, [isMobile]);
 
   return (
     <header style={{
@@ -42,66 +57,72 @@ export function TopBar({ cartCount, onCartClick }) {
 
       <div className="wrap" style={{
         display: "grid",
-        gridTemplateColumns: "auto 1fr auto",
+        gridTemplateColumns: isMobile ? "auto 1fr auto" : "auto 1fr auto",
         alignItems: "center",
-        gap: 24,
-        padding: "18px 36px",
+        gap: isMobile ? 12 : 24,
+        padding: isMobile ? "12px 18px" : "18px 36px",
       }}>
-        <a href="#top" style={{ display: "flex", alignItems: "center", gap: 14, textDecoration: "none" }}>
-          <img src="/assets/bubbys-logo.png" alt="Bubby's New York Bagels" style={{ width: 56, height: 56, display: "block" }} />
+        <a href="#top" style={{ display: "flex", alignItems: "center", gap: isMobile ? 10 : 14, textDecoration: "none" }}>
+          <img src="/assets/bubbys-logo.png" alt="Bubby's New York Bagels"
+               style={{ width: isMobile ? 40 : 56, height: isMobile ? 40 : 56, display: "block" }} />
           <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
-            <span style={{ fontFamily: "var(--display)", fontSize: 28, letterSpacing: "-.02em" }}>Bubby's</span>
-            <span style={{ fontFamily: "var(--mono)", fontSize: 9, letterSpacing: ".26em", textTransform: "uppercase", marginTop: 4, color: "var(--orange-deep)" }}>New York Bagels</span>
+            <span style={{ fontFamily: "var(--display)", fontSize: isMobile ? 22 : 28, letterSpacing: "-.02em" }}>Bubby's</span>
+            {!isMobile && (
+              <span style={{ fontFamily: "var(--mono)", fontSize: 9, letterSpacing: ".26em", textTransform: "uppercase", marginTop: 4, color: "var(--orange-deep)" }}>
+                New York Bagels
+              </span>
+            )}
           </div>
         </a>
 
-        <nav style={{
-          display: "flex", justifyContent: "center", gap: 36,
-          fontFamily: "var(--body)", fontWeight: 700, fontSize: 14,
-          letterSpacing: ".14em", textTransform: "uppercase",
-        }}>
-          {[
-            ["Bagels", "#menu"],
-            ["Sandwiches", "#sandwiches"],
-            ["Catering", "#catering"],
-            ["Our Story", "#story"],
-            ["Find Us", "#locations"],
-          ].map(([label, href]) => (
-            <a key={label} href={href} style={{ textDecoration: "none", color: "var(--ink)", position: "relative" }}
-               onMouseEnter={(e) => e.currentTarget.style.color = "var(--lox-deep)"}
-               onMouseLeave={(e) => e.currentTarget.style.color = "var(--ink)"}>
-              {label}
-            </a>
-          ))}
-        </nav>
-
-        <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-          <a href="tel:4168622435" style={{
-            fontFamily: "var(--mono)", fontSize: 13, letterSpacing: ".06em",
-            textDecoration: "none", color: "var(--ink)",
-            display: "flex", alignItems: "center", gap: 8,
+        {/* Desktop nav */}
+        {!isMobile && (
+          <nav style={{
+            display: "flex", justifyContent: "center", gap: 36,
+            fontFamily: "var(--body)", fontWeight: 700, fontSize: 14,
+            letterSpacing: ".14em", textTransform: "uppercase",
           }}>
-            <span style={{ display: "inline-block", width: 8, height: 8, borderRadius: "50%", background: "var(--pickle)", boxShadow: "0 0 0 3px rgba(93,122,60,.25)" }} />
-            (416) 862-2435
-          </a>
+            {NAV.map(([label, href]) => (
+              <a key={label} href={href} style={{ textDecoration: "none", color: "var(--ink)", position: "relative" }}
+                 onMouseEnter={(e) => e.currentTarget.style.color = "var(--lox-deep)"}
+                 onMouseLeave={(e) => e.currentTarget.style.color = "var(--ink)"}>
+                {label}
+              </a>
+            ))}
+          </nav>
+        )}
+        {isMobile && <div />}
+
+        <div style={{ display: "flex", gap: isMobile ? 8 : 12, alignItems: "center" }}>
+          {!isMobile && (
+            <a href="tel:4168622435" style={{
+              fontFamily: "var(--mono)", fontSize: 13, letterSpacing: ".06em",
+              textDecoration: "none", color: "var(--ink)",
+              display: "flex", alignItems: "center", gap: 8,
+            }}>
+              <span style={{ display: "inline-block", width: 8, height: 8, borderRadius: "50%", background: "var(--pickle)", boxShadow: "0 0 0 3px rgba(93,122,60,.25)" }} />
+              (416) 862-2435
+            </a>
+          )}
           <button
             onClick={onCartClick}
+            aria-label="View order"
             style={{
               border: "2.5px solid var(--ink)",
               background: "var(--mustard)",
               color: "var(--ink)",
-              padding: "10px 18px",
+              padding: isMobile ? "8px 12px" : "10px 18px",
               borderRadius: 999,
               fontFamily: "var(--body)",
               fontWeight: 800,
               letterSpacing: ".1em",
               textTransform: "uppercase",
-              fontSize: 13,
+              fontSize: isMobile ? 12 : 13,
               cursor: "pointer",
               boxShadow: "0 4px 0 var(--ink)",
               display: "flex",
               alignItems: "center",
-              gap: 10,
+              gap: isMobile ? 6 : 10,
             }}
           >
             <span>Order</span>
@@ -112,8 +133,70 @@ export function TopBar({ cartCount, onCartClick }) {
               fontFeatureSettings: '"tnum"',
             }}>{cartCount}</span>
           </button>
+          {isMobile && (
+            <button
+              onClick={() => setMenuOpen((v) => !v)}
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+              style={{
+                appearance: "none",
+                border: "2.5px solid var(--ink)",
+                background: "var(--paper)",
+                width: 40, height: 40, borderRadius: 10,
+                display: "grid", placeItems: "center",
+                cursor: "pointer",
+                boxShadow: "0 4px 0 var(--ink)",
+                padding: 0,
+              }}
+            >
+              <span style={{
+                width: 18, height: 14, position: "relative", display: "inline-block",
+              }}>
+                <span style={{ position: "absolute", left: 0, right: 0, top: menuOpen ? 6 : 0, height: 2.5, background: "var(--ink)", borderRadius: 2, transform: menuOpen ? "rotate(45deg)" : "none", transition: "all .15s" }} />
+                <span style={{ position: "absolute", left: 0, right: 0, top: 6, height: 2.5, background: "var(--ink)", borderRadius: 2, opacity: menuOpen ? 0 : 1, transition: "opacity .1s" }} />
+                <span style={{ position: "absolute", left: 0, right: 0, bottom: menuOpen ? 6 : 0, height: 2.5, background: "var(--ink)", borderRadius: 2, transform: menuOpen ? "rotate(-45deg)" : "none", transition: "all .15s" }} />
+              </span>
+            </button>
+          )}
         </div>
       </div>
+
+      {/* Mobile nav drawer */}
+      {isMobile && menuOpen && (
+        <nav style={{
+          background: "var(--paper)",
+          borderTop: "2.5px solid var(--ink)",
+          borderBottom: "2.5px solid var(--ink)",
+          padding: "12px 18px 18px",
+          display: "flex", flexDirection: "column", gap: 4,
+        }}>
+          {NAV.map(([label, href]) => (
+            <a
+              key={label}
+              href={href}
+              onClick={() => setMenuOpen(false)}
+              style={{
+                textDecoration: "none", color: "var(--ink)",
+                fontFamily: "var(--body)", fontWeight: 800, fontSize: 18,
+                letterSpacing: ".1em", textTransform: "uppercase",
+                padding: "12px 4px",
+                borderBottom: "1.5px dashed rgba(26,22,18,.3)",
+              }}
+            >
+              {label}
+            </a>
+          ))}
+          <a href="tel:4168622435" style={{
+            marginTop: 12,
+            display: "inline-flex", alignItems: "center", gap: 10,
+            textDecoration: "none", color: "var(--ink)",
+            fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".06em",
+          }}>
+            <span style={{ display: "inline-block", width: 8, height: 8, borderRadius: "50%", background: "var(--pickle)", boxShadow: "0 0 0 3px rgba(93,122,60,.25)" }} />
+            (416) 862-2435
+          </a>
+        </nav>
+      )}
     </header>
   );
 }

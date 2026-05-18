@@ -2,6 +2,7 @@ import React from "react";
 import { Bagel, SectionHeader, StarBurst, Sticker } from "./atoms.jsx";
 import { SeedScatter } from "./fun.jsx";
 import { BAGELS, SANDWICHES } from "../data/menu.js";
+import { useIsMobile } from "../hooks/useIsMobile.js";
 
 function SpiceMeter({ level }) {
   return (
@@ -132,10 +133,11 @@ function SandwichCard({ s, onAdd, idx }) {
 }
 
 export function Sandwiches({ onAddSandwich }) {
+  const isMobile = useIsMobile();
   return (
     <section id="sandwiches" style={{ padding: "120px 0 80px", position: "relative" }}>
       <div className="wrap">
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 32, flexWrap: "wrap", marginBottom: 70 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 32, flexWrap: "wrap", marginBottom: isMobile ? 40 : 70 }}>
           <SectionHeader
             num="N° 04"
             kicker="The Sandwich Menu — strictly dairy & fish"
@@ -160,8 +162,8 @@ export function Sandwiches({ onAddSandwich }) {
 
         <div style={{
           display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-          gap: 32,
+          gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)",
+          gap: isMobile ? 24 : 32,
         }}>
           {SANDWICHES.map((s, i) => (
             <SandwichCard key={s.id} s={s} idx={i} onAdd={onAddSandwich} />

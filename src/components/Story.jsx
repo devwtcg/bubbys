@@ -2,11 +2,18 @@ import React from "react";
 import { Eyebrow, StarBurst } from "./atoms.jsx";
 import { Tape } from "./fun.jsx";
 import { PHOTOS } from "../data/photos.js";
+import { useIsMobile } from "../hooks/useIsMobile.js";
 
 export function Story() {
+  const isMobile = useIsMobile();
   return (
     <section id="story" style={{ padding: "140px 0 100px", position: "relative" }}>
-      <div className="wrap" style={{ display: "grid", gridTemplateColumns: "1fr 1.1fr", gap: 80, alignItems: "center" }}>
+      <div className="wrap" style={{
+        display: "grid",
+        gridTemplateColumns: isMobile ? "1fr" : "1fr 1.1fr",
+        gap: isMobile ? 40 : 80,
+        alignItems: "center",
+      }}>
         <div style={{ position: "relative", aspectRatio: "1 / 1.1" }}>
           <div style={{
             position: "absolute", top: 0, left: 0, width: "62%", height: "62%",

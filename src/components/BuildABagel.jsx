@@ -2,6 +2,7 @@ import React from "react";
 import { Bagel, Btn, Eyebrow, SectionHeader, Sticker } from "./atoms.jsx";
 import { BubbySays } from "./fun.jsx";
 import { BAGELS, SCHMEARS } from "../data/menu.js";
+import { useIsMobile } from "../hooks/useIsMobile.js";
 
 function BagelTile({ b, selected, onClick, onAdd }) {
   return (
@@ -103,6 +104,7 @@ function SchmearPot({ s, selected, onClick }) {
 export function BuildABagel({ onAddCombo }) {
   const [bagelId, setBagelId] = React.useState("everything");
   const [schmearId, setSchmearId] = React.useState("plain");
+  const isMobile = useIsMobile();
 
   const bagel = BAGELS.find(b => b.id === bagelId);
   const schmear = SCHMEARS.find(s => s.id === schmearId);
@@ -125,8 +127,8 @@ export function BuildABagel({ onAddCombo }) {
 
         <div style={{
           display: "grid",
-          gridTemplateColumns: "1.3fr 1fr",
-          gap: 40,
+          gridTemplateColumns: isMobile ? "1fr" : "1.3fr 1fr",
+          gap: isMobile ? 24 : 40,
           alignItems: "stretch",
         }}>
           <div style={{
@@ -187,7 +189,7 @@ export function BuildABagel({ onAddCombo }) {
               </div>
               <div style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(4, 1fr)",
+                gridTemplateColumns: isMobile ? "repeat(3, 1fr)" : "repeat(4, 1fr)",
                 gap: 4,
                 padding: 14,
                 background: "var(--schmear)",
@@ -226,7 +228,7 @@ export function BuildABagel({ onAddCombo }) {
                 <span style={{ fontFamily: "var(--mono)", fontSize: 11, opacity: .6 }}>house made</span>
               </div>
               <div style={{
-                display: "grid", gridTemplateColumns: "repeat(4, 1fr)",
+                display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(4, 1fr)",
                 gap: 8, padding: 14,
                 background: "var(--schmear)",
                 border: "2.5px solid var(--ink)",

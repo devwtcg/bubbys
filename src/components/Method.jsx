@@ -1,6 +1,7 @@
 import React from "react";
 import { Bagel, SectionHeader } from "./atoms.jsx";
 import { BubbySays } from "./fun.jsx";
+import { useIsMobile } from "../hooks/useIsMobile.js";
 
 function MethodCard({ num, title, time, body, accent, illustration }) {
   return (
@@ -44,10 +45,11 @@ function MethodCard({ num, title, time, body, accent, illustration }) {
 }
 
 export function Method() {
+  const isMobile = useIsMobile();
   return (
     <section style={{ padding: "120px 0 80px", position: "relative" }}>
       <div className="wrap">
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 70, gap: 32, flexWrap: "wrap" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: isMobile ? 48 : 70, gap: 32, flexWrap: "wrap" }}>
           <SectionHeader
             num="N° 02"
             kicker="The Old-School Way"
@@ -61,8 +63,8 @@ export function Method() {
 
         <div style={{
           display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-          gap: 36,
+          gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)",
+          gap: isMobile ? 28 : 36,
         }}>
           <MethodCard
             num="1"
@@ -160,9 +162,9 @@ export function Method() {
         </div>
 
         <div style={{
-          marginTop: 64,
+          marginTop: isMobile ? 40 : 64,
           display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
+          gridTemplateColumns: isMobile ? "1fr" : "repeat(4, 1fr)",
           gap: 0,
           border: "2.5px solid var(--ink)",
           borderRadius: 16,
@@ -177,7 +179,8 @@ export function Method() {
           ].map(([k, v], i) => (
             <div key={k} style={{
               padding: "22px 24px",
-              borderRight: i < 3 ? "2.5px dashed var(--ink)" : "none",
+              borderRight: !isMobile && i < 3 ? "2.5px dashed var(--ink)" : "none",
+              borderBottom: isMobile && i < 3 ? "2.5px dashed var(--ink)" : "none",
             }}>
               <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: ".18em", color: "var(--lox-deep)" }}>{k}</div>
               <div style={{ marginTop: 8, fontSize: 15, lineHeight: 1.35 }}>{v}</div>

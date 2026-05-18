@@ -3,24 +3,45 @@ import { Bagel, Btn, Eyebrow, Sticker } from "./atoms.jsx";
 import { BubbySays, Squiggle } from "./fun.jsx";
 import { PHOTOS } from "../data/photos.js";
 import { useStoreOpen } from "../hooks/useStoreOpen.js";
+import { useIsMobile } from "../hooks/useIsMobile.js";
 
 export function Hero() {
   const { store } = useStoreOpen();
+  const isMobile = useIsMobile();
   const openColor = store.open ? "var(--pickle)" : "var(--lox-deep)";
+  // Shorten label on mobile so the badge doesn't wrap word-by-word.
+  const badgeLabel = isMobile
+    ? (store.open ? "OPEN NOW" : store.label)
+    : store.label;
+
   return (
     <section id="top" style={{
       position: "relative",
-      paddingTop: 40,
-      paddingBottom: 60,
+      paddingTop: isMobile ? 24 : 40,
+      paddingBottom: isMobile ? 40 : 60,
       overflow: "hidden",
     }}>
       <div className="wrap" style={{ position: "relative" }}>
-        <div style={{ position: "absolute", top: 12, right: 24, animation: "wiggle 6s ease-in-out infinite", zIndex: 2 }}>
-          <img src="/assets/bubbys-logo.png" alt="" style={{ width: 170, height: 170, display: "block", filter: "drop-shadow(6px 6px 0 var(--ink))" }} />
-        </div>
+        {/* Floating logo, hidden on mobile to save space */}
+        {!isMobile && (
+          <div style={{ position: "absolute", top: 12, right: 24, animation: "wiggle 6s ease-in-out infinite", zIndex: 2 }}>
+            <img src="/assets/bubbys-logo.png" alt=""
+                 style={{ width: 170, height: 170, display: "block", filter: "drop-shadow(6px 6px 0 var(--ink))" }} />
+          </div>
+        )}
 
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 24, gap: 24, flexWrap: "wrap", paddingRight: 200 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+        {/* Eyebrow row */}
+        <div style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: isMobile ? "flex-start" : "center",
+          flexDirection: isMobile ? "column" : "row",
+          marginTop: isMobile ? 8 : 24,
+          gap: isMobile ? 12 : 24,
+          flexWrap: "wrap",
+          paddingRight: isMobile ? 0 : 200,
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 10 : 16, flexWrap: "wrap" }}>
             <Eyebrow num="N° 01">A bagel shop on Bathurst</Eyebrow>
             <span
               title={store.open ? `Open until ${store.until} ET` : undefined}
@@ -30,6 +51,7 @@ export function Hero() {
                 fontFamily: "var(--mono)", fontSize: 11, letterSpacing: ".22em", textTransform: "uppercase",
                 border: "2px solid var(--ink)", borderRadius: 4,
                 boxShadow: "3px 3px 0 var(--ink)",
+                whiteSpace: "nowrap",
               }}
             >
               <span style={{
@@ -38,26 +60,30 @@ export function Hero() {
                 animation: store.open ? "pulse 1.6s ease-in-out infinite" : "none",
                 opacity: store.open ? 1 : 0.7,
               }} />
-              {store.label}
-              {store.open && store.until && (
+              {badgeLabel}
+              {!isMobile && store.open && store.until && (
                 <span style={{ opacity: .8, marginLeft: 4 }}>· til {store.until}</span>
               )}
             </span>
           </div>
-          <div style={{ fontFamily: "var(--mono)", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase" }}>
+          <div style={{ fontFamily: "var(--mono)", fontSize: isMobile ? 10 : 12, letterSpacing: ".18em", textTransform: "uppercase" }}>
             EST. 2011 · TORONTO · ONT
           </div>
         </div>
 
+        {/* MEGA WORDMARK */}
         <h1
           className="h-display"
           style={{
-            marginTop: 32,
-            fontSize: "clamp(96px, 17.5vw, 280px)",
+            marginTop: isMobile ? 20 : 32,
+            fontSize: isMobile
+              ? "clamp(56px, 17vw, 96px)"
+              : "clamp(96px, 17.5vw, 280px)",
             lineHeight: .82,
             color: "var(--ink)",
             letterSpacing: "-.035em",
             position: "relative",
+            wordBreak: "keep-all",
           }}
         >
           BUBB
@@ -81,44 +107,61 @@ export function Hero() {
           <span style={{ color: "var(--orange)" }}>S.</span>
         </h1>
         <div style={{ marginTop: 12, marginLeft: 4 }}>
-          <Squiggle width={420} height={18} color="var(--orange)" />
+          <Squiggle width={isMobile ? 240 : 420} height={isMobile ? 14 : 18} color="var(--orange)" />
         </div>
 
+        {/* Tagline + stats grid */}
         <div style={{
           display: "grid",
-          gridTemplateColumns: "1.2fr 1fr",
-          gap: 64,
-          marginTop: 48,
-          alignItems: "end",
+          gridTemplateColumns: isMobile ? "1fr" : "1.2fr 1fr",
+          gap: isMobile ? 36 : 64,
+          marginTop: isMobile ? 28 : 48,
+          alignItems: isMobile ? "stretch" : "end",
           position: "relative",
         }}>
-          <div style={{ position: "absolute", top: -80, right: "42%", zIndex: 4 }}>
-            <BubbySays color="var(--mustard)" tilt={-4} tail="br">
-              "Eat! You're<br/>skin and bones!"
-            </BubbySays>
-          </div>
+          {/* Speech bubble: absolute on desktop, inline on mobile */}
+          {isMobile ? (
+            <div style={{ marginBottom: 4 }}>
+              <BubbySays color="var(--mustard)" tilt={-3} tail="bl">
+                "Eat! You're skin and bones!"
+              </BubbySays>
+            </div>
+          ) : (
+            <div style={{ position: "absolute", top: -80, right: "42%", zIndex: 4 }}>
+              <BubbySays color="var(--mustard)" tilt={-4} tail="br">
+                "Eat! You're<br/>skin and bones!"
+              </BubbySays>
+            </div>
+          )}
+
           <div>
             <p style={{
               fontFamily: "var(--serif)",
-              fontSize: "clamp(22px, 2.4vw, 36px)",
-              lineHeight: 1.15,
+              fontSize: isMobile ? "clamp(18px, 5vw, 24px)" : "clamp(22px, 2.4vw, 36px)",
+              lineHeight: 1.2,
               margin: 0,
               maxWidth: 720,
               textWrap: "pretty",
             }}>
               Cold-proofed for 36 hours. Kettle-boiled in honey water. Baked on wooden burlap boards in a stone-deck oven — because that's how Bubby would've wanted it.
             </p>
-            <div style={{ display: "flex", gap: 16, marginTop: 32, flexWrap: "wrap" }}>
+            <div style={{ display: "flex", gap: isMobile ? 12 : 16, marginTop: isMobile ? 20 : 32, flexWrap: "wrap" }}>
               <Btn variant="yellow" href="#menu">Order a Dozen</Btn>
               <Btn variant="ghost" href="#story" icon="↓">Read the story</Btn>
             </div>
           </div>
 
-          <div style={{ display: "flex", gap: 18, alignItems: "center" }}>
+          <div style={{
+            display: "flex",
+            gap: isMobile ? 16 : 18,
+            alignItems: "center",
+            flexDirection: isMobile ? "column" : "row",
+          }}>
             <div style={{
               position: "relative",
-              width: 220, height: 220,
-              flex: "0 0 220px",
+              width: isMobile ? 180 : 220,
+              height: isMobile ? 180 : 220,
+              flex: `0 0 ${isMobile ? 180 : 220}px`,
             }}>
               <div style={{
                 position: "absolute", inset: 0, borderRadius: "50%",
@@ -134,22 +177,32 @@ export function Hero() {
               </div>
             </div>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: isMobile ? "repeat(3, 1fr)" : "1fr",
+              gap: isMobile ? 12 : 18,
+              width: isMobile ? "100%" : "auto",
+            }}>
               {[
                 ["10×", "Best Bagel\nin the GTA"],
                 ["36h", "Cold proof,\nno shortcuts"],
                 ["7", "Days a week,\nfresh from 6am"],
               ].map(([n, l]) => (
-                <div key={n} style={{ display: "flex", gap: 14, alignItems: "center" }}>
+                <div key={n} style={{
+                  display: "flex",
+                  flexDirection: isMobile ? "column" : "row",
+                  gap: isMobile ? 4 : 14,
+                  alignItems: isMobile ? "flex-start" : "center",
+                }}>
                   <div style={{
                     fontFamily: "var(--display)",
-                    fontSize: 56,
+                    fontSize: isMobile ? 36 : 56,
                     lineHeight: .8,
                     color: "var(--orange)",
-                    minWidth: 90,
+                    minWidth: isMobile ? "auto" : 90,
                   }}>{n}</div>
                   <div style={{
-                    fontFamily: "var(--mono)", fontSize: 12,
+                    fontFamily: "var(--mono)", fontSize: isMobile ? 10 : 12,
                     letterSpacing: ".14em", textTransform: "uppercase",
                     whiteSpace: "pre-line", lineHeight: 1.2,
                   }}>{l}</div>

@@ -1,8 +1,10 @@
 import React from "react";
 import { Btn, SectionHeader, Sticker } from "./atoms.jsx";
 import { HOURS_DISPLAY } from "../data/hours.js";
+import { useIsMobile } from "../hooks/useIsMobile.js";
 
 export function Locations() {
+  const isMobile = useIsMobile();
   const spots = [
     {
       name: "Bubby's Bagels",
@@ -82,7 +84,12 @@ export function Locations() {
                 <span style={{ opacity: .7 }}>{s.city}</span>
               </div>
 
-              <div style={{ marginTop: 24, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+              <div style={{
+                marginTop: 24,
+                display: "grid",
+                gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
+                gap: 20,
+              }}>
                 <div>
                   <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--lox-deep)" }}>HOURS</div>
                   <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 6, fontFamily: "var(--mono)", fontSize: 13, lineHeight: 1 }}>
@@ -114,16 +121,17 @@ export function Locations() {
 }
 
 export function Footer() {
+  const isMobile = useIsMobile();
   return (
-    <footer style={{ background: "var(--ink)", color: "var(--paper)", paddingTop: 80, paddingBottom: 40, position: "relative", overflow: "hidden" }}>
+    <footer style={{ background: "var(--ink)", color: "var(--paper)", paddingTop: isMobile ? 56 : 80, paddingBottom: 40, position: "relative", overflow: "hidden" }}>
       <div className="wrap">
         <div style={{
           fontFamily: "var(--display)",
-          fontSize: "clamp(80px, 17vw, 280px)",
+          fontSize: isMobile ? "clamp(64px, 22vw, 120px)" : "clamp(80px, 17vw, 280px)",
           lineHeight: .85,
           letterSpacing: "-.04em",
           color: "var(--paper)",
-          marginBottom: 60,
+          marginBottom: isMobile ? 36 : 60,
           textAlign: "center",
         }}>
           BUBBY<span style={{ color: "var(--mustard)" }}>'</span>S
@@ -131,9 +139,9 @@ export function Footer() {
 
         <div style={{
           display: "grid",
-          gridTemplateColumns: "2fr 1fr 1fr 1fr",
-          gap: 48,
-          paddingTop: 40,
+          gridTemplateColumns: isMobile ? "1fr" : "2fr 1fr 1fr 1fr",
+          gap: isMobile ? 32 : 48,
+          paddingTop: isMobile ? 28 : 40,
           borderTop: "2.5px solid var(--paper)",
         }}>
           <div>
