@@ -1,9 +1,10 @@
 import React from "react";
-import { Bagel, Btn, Eyebrow, Sticker } from "./atoms.jsx";
+import { Btn, Eyebrow, Sticker } from "./atoms.jsx";
 import { BubbySays, Squiggle } from "./fun.jsx";
 import { PHOTOS } from "../data/photos.js";
 import { useStoreOpen } from "../hooks/useStoreOpen.js";
 import { useIsMobile } from "../hooks/useIsMobile.js";
+import { BRAND, BRAND_ASSETS } from "../brand.js";
 
 export function Hero() {
   const { store } = useStoreOpen();
@@ -25,8 +26,12 @@ export function Hero() {
         {/* Floating logo, hidden on mobile to save space */}
         {!isMobile && (
           <div style={{ position: "absolute", top: 12, right: 24, animation: "wiggle 6s ease-in-out infinite", zIndex: 2 }}>
-            <img src="/assets/bubbys-logo.png" alt=""
-                 style={{ width: 170, height: 170, display: "block", filter: "drop-shadow(6px 6px 0 var(--ink))" }} />
+            <img
+              className="brand-logo brand-logo--badge"
+              src={BRAND_ASSETS.badge}
+              alt={BRAND.name}
+              style={{ filter: "drop-shadow(6px 6px 0 var(--ink))" }}
+            />
           </div>
         )}
 
@@ -42,7 +47,7 @@ export function Hero() {
           paddingRight: isMobile ? 0 : 200,
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 10 : 16, flexWrap: "wrap" }}>
-            <Eyebrow num="N° 01">A bagel shop on Bathurst</Eyebrow>
+            <Eyebrow num="No. 01">A bagel shop on Bathurst</Eyebrow>
             <span
               title={store.open ? `Open until ${store.until} ET` : undefined}
               style={{
@@ -81,7 +86,7 @@ export function Hero() {
               : "clamp(96px, 17.5vw, 280px)",
             lineHeight: .82,
             color: "var(--ink)",
-            letterSpacing: "-.035em",
+            letterSpacing: 0,
             position: "relative",
             wordBreak: "keep-all",
           }}
@@ -91,19 +96,7 @@ export function Hero() {
           <span style={{ color: "var(--orange)" }}>'</span>
           S
           <br />
-          BA
-          <span style={{ display: "inline-block", position: "relative", width: "1em" }}>
-            <span style={{
-              position: "absolute",
-              left: "50%", top: "52%",
-              transform: "translate(-50%, -50%)",
-              width: "1em", height: "1em",
-            }}>
-              <Bagel variant="everything" size="100%" style={{ width: "100%", height: "100%" }} />
-            </span>
-            <span style={{ visibility: "hidden" }}>O</span>
-          </span>
-          EL
+          BAGEL
           <span style={{ color: "var(--orange)" }}>S.</span>
         </h1>
         <div style={{ marginTop: 12, marginLeft: 4 }}>

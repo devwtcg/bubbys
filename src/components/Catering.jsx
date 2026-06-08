@@ -38,7 +38,7 @@ export function Catering() {
   ];
 
   return (
-    <section id="catering" style={{ padding: "120px 0 80px", background: "var(--ink)", color: "var(--paper)", position: "relative", overflow: "hidden" }}>
+    <section id="catering" className="section--dark" style={{ padding: "120px 0 80px", position: "relative", overflow: "hidden" }}>
       <SeedScatter count={80} color="var(--mustard)" style={{ opacity: .35 }} />
       <div className="wrap" style={{ position: "relative", zIndex: 1 }}>
         <div style={{
@@ -49,7 +49,7 @@ export function Catering() {
           marginBottom: isMobile ? 40 : 60,
         }}>
           <div>
-            <Eyebrow num="N° 05"><span style={{ color: "var(--paper)" }}>Feed the whole mishpacha</span></Eyebrow>
+            <Eyebrow num="N° 05">Feed the whole mishpacha</Eyebrow>
             <h2 className="h-section" style={{ marginTop: 18, color: "var(--paper)" }}>
               Bagels for<br/><span style={{ color: "var(--mustard)" }}>everyone</span>.
             </h2>

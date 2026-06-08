@@ -1,5 +1,6 @@
 import React from "react";
 import { useIsMobile } from "../hooks/useIsMobile.js";
+import { BRAND, BRAND_ASSETS } from "../brand.js";
 
 const NAV = [
   ["Bagels", "#menu"],
@@ -63,16 +64,11 @@ export function TopBar({ cartCount, onCartClick }) {
         padding: isMobile ? "12px 18px" : "18px 36px",
       }}>
         <a href="#top" style={{ display: "flex", alignItems: "center", gap: isMobile ? 10 : 14, textDecoration: "none" }}>
-          <img src="/assets/bubbys-logo.png" alt="Bubby's New York Bagels"
-               style={{ width: isMobile ? 40 : 56, height: isMobile ? 40 : 56, display: "block" }} />
-          <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
-            <span style={{ fontFamily: "var(--display)", fontSize: isMobile ? 22 : 28, letterSpacing: "-.02em" }}>Bubby's</span>
-            {!isMobile && (
-              <span style={{ fontFamily: "var(--mono)", fontSize: 9, letterSpacing: ".26em", textTransform: "uppercase", marginTop: 4, color: "var(--orange-deep)" }}>
-                New York Bagels
-              </span>
-            )}
-          </div>
+          <img
+            className="brand-logo brand-logo--nav"
+            src={BRAND_ASSETS.horizontalColor}
+            alt={BRAND.name}
+          />
         </a>
 
         {/* Desktop nav */}

@@ -2,6 +2,7 @@ import React from "react";
 import { Btn, SectionHeader, Sticker } from "./atoms.jsx";
 import { HOURS_DISPLAY } from "../data/hours.js";
 import { useIsMobile } from "../hooks/useIsMobile.js";
+import { BRAND, BRAND_ASSETS } from "../brand.js";
 
 export function Locations() {
   const isMobile = useIsMobile();
@@ -125,16 +126,12 @@ export function Footer() {
   return (
     <footer style={{ background: "var(--ink)", color: "var(--paper)", paddingTop: isMobile ? 56 : 80, paddingBottom: 40, position: "relative", overflow: "hidden" }}>
       <div className="wrap">
-        <div style={{
-          fontFamily: "var(--display)",
-          fontSize: isMobile ? "clamp(64px, 22vw, 120px)" : "clamp(80px, 17vw, 280px)",
-          lineHeight: .85,
-          letterSpacing: "-.04em",
-          color: "var(--paper)",
-          marginBottom: isMobile ? 36 : 60,
-          textAlign: "center",
-        }}>
-          BUBBY<span style={{ color: "var(--mustard)" }}>'</span>S
+        <div style={{ marginBottom: isMobile ? 36 : 60 }}>
+          <img
+            className="brand-logo brand-logo--footer"
+            src={BRAND_ASSETS.horizontalWhite}
+            alt={BRAND.name}
+          />
         </div>
 
         <div style={{

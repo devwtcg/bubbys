@@ -11,7 +11,6 @@ import { Catering } from "./components/Catering.jsx";
 import { Story } from "./components/Story.jsx";
 import { Locations, Footer } from "./components/Locations.jsx";
 import { CartDrawer } from "./components/CartDrawer.jsx";
-import { BubbysTweaks } from "./components/BubbysTweaks.jsx";
 import { BAGELS } from "./data/menu.js";
 
 export default function App() {
@@ -95,8 +94,6 @@ export default function App() {
         onIncrement={onInc}
         onDecrement={onDec}
       />
-
-      <BubbysTweaks />
     </div>
   );
 }
