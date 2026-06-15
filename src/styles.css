@@ -54,6 +54,15 @@
 
 * { box-sizing: border-box; }
 
+[style*="var(--display)"],
+[style*="var(--serif)"],
+.h-display,
+.h-section,
+.h-sub,
+.pl-wordmark {
+  font-optical-sizing: none;
+}
+
 html, body {
   margin: 0;
   padding: 0;
