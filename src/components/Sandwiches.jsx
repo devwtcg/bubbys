@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { Bagel, SectionHeader, StarBurst, Sticker } from "./atoms.jsx";
 import { SeedScatter } from "./fun.jsx";
 import { BAGELS, SANDWICHES } from "../data/menu.js";
@@ -72,16 +72,16 @@ function SandwichCard({ s, onAdd, idx }) {
 
       <div style={{ position: "relative", zIndex: 1 }}>
         <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
-          <span style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--ink)", opacity: .75 }}>
+          <span style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--ink)", opacity: .75 }}>
             {s.tag}
           </span>
           <span style={{
-            fontFamily: "var(--mono)", fontSize: 10, letterSpacing: ".14em",
+            fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".14em",
             textTransform: "uppercase",
             padding: "3px 8px",
             background: "var(--ink)", color: "var(--paper)",
             borderRadius: 4,
-          }}>{s.kind === "fish" ? "🐟 FISH" : s.kind === "dairy" ? "🧀 DAIRY" : "PAREVE"}</span>
+          }}>{s.kind === "fish" ? "FISH" : s.kind === "dairy" ? "DAIRY" : "PAREVE"}</span>
         </div>
         <h3 style={{
           fontFamily: "var(--display)", fontSize: 46, lineHeight: .92,
@@ -104,7 +104,7 @@ function SandwichCard({ s, onAdd, idx }) {
           </div>
           {s.spice > 0 && (
             <div style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 6 }}>
-              <span style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: ".1em", textTransform: "uppercase" }}>HEAT</span>
+              <span style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".1em", textTransform: "uppercase" }}>HEAT</span>
               <SpiceMeter level={s.spice} />
             </div>
           )}
@@ -119,13 +119,13 @@ function SandwichCard({ s, onAdd, idx }) {
             color: "var(--paper)",
             borderRadius: 999,
             fontFamily: "var(--body)", fontWeight: 800,
-            fontSize: 12, letterSpacing: ".1em", textTransform: "uppercase",
+            fontSize: 14, letterSpacing: ".1em", textTransform: "uppercase",
             border: "2.5px solid var(--ink)",
             boxShadow: "3px 3px 0 var(--ink)",
             display: "inline-flex", gap: 8, alignItems: "center",
           }}
         >
-          Add <span style={{ background: "var(--paper)", color: "var(--ink)", width: 18, height: 18, borderRadius: "50%", display: "grid", placeItems: "center", fontSize: 12 }}>+</span>
+          Add <span style={{ background: "var(--paper)", color: "var(--ink)", width: 18, height: 18, borderRadius: "50%", display: "grid", placeItems: "center", fontSize: 14 }}>+</span>
         </button>
       </div>
     </article>
@@ -140,20 +140,20 @@ export function Sandwiches({ onAddSandwich }) {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 32, flexWrap: "wrap", marginBottom: isMobile ? 40 : 70 }}>
           <SectionHeader
             num="N° 04"
-            kicker="The Sandwich Menu — strictly dairy & fish"
+            kicker="Signature Classics — strictly dairy & fish"
             title={<>Six legends.<br/>One stone oven.</>}
-            lede="Every sandwich is on a bagel that came out of our oven this morning. Strictly dairy and fish — COR certified, always."
+            lede="The store-menu favourites: breakfast classics, wraps, tuna, and lox. Strictly dairy and fish — COR certified, always."
           />
           <div style={{
             position: "relative",
             display: "flex", alignItems: "center",
             transform: "rotate(6deg)",
           }}>
-            <StarBurst size={140} color="var(--mustard)" />
+            <StarBurst size={isMobile ? 165 : 200} color="var(--mustard)" />
             <div style={{
               position: "absolute", inset: 0, display: "grid", placeItems: "center",
-              textAlign: "center", fontFamily: "var(--display)", fontSize: 22, lineHeight: 1,
-              padding: 24, transform: "rotate(-3deg)",
+              textAlign: "center", fontFamily: "var(--display)", fontSize: isMobile ? 25 : 30, lineHeight: 1,
+              padding: 32, transform: "rotate(-3deg)",
             }}>
               ALL DAY<br/>BREKKIE!
             </div>

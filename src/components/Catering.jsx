@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { Btn, Eyebrow, Sticker } from "./atoms.jsx";
 import { BubbySays, SeedScatter } from "./fun.jsx";
 import { useStoreOpen } from "../hooks/useStoreOpen.js";
@@ -11,27 +11,26 @@ export function Catering() {
   const isMobile = useIsMobile();
   const tiers = [
     {
-      name: "The Schmooze",
+      name: "Scoops & Bagels",
       serves: "6–8 people",
-      price: 75,
-      includes: ["1 dozen bagels (your pick)", "3 schmears, full size", "Pickled veg + cuts"],
+      price: 100,
+      includes: ["10 bagels or 14 mini bagels", "Bishul tuna, egg, and cream cheese scoops", "Assorted sliced vegetables"],
       accent: "var(--mustard)",
       featured: false,
     },
     {
-      name: "The Whole Megillah",
-      serves: "12–16 people",
-      price: 165,
-      includes: ["2 dozen bagels", "5 schmears + house lox", "Pickles, capers, onion, tomato", "Setup + delivery in the GTA"],
+      name: "Smoked Salmon & Cream Cheese",
+      serves: "6–8 people",
+      price: 115,
+      includes: ["10 bagels or 14 mini bagels", "Lox florettes and assorted cream cheese", "Vegetables, capers, and lemon wedges"],
       accent: "var(--lox)",
       featured: true,
     },
     {
-      name: "Bar Mitzvah Special",
-      serves: "50+ people",
-      price: 12.5,
-      perPerson: true,
-      includes: ["Bagel + schmear bar", "Lox station, eggs", "Fresh OJ & coffee urns", "Two staff on site, 3 hrs"],
+      name: "Bagel Sandwich Halves",
+      serves: "20 halves",
+      price: 100,
+      includes: ["Assorted bagel sandwiches cut in half", "Tuna, egg salad, cream cheese, lox, and sliced cheese", "Garnished with vegetables on the side"],
       accent: "var(--pickle)",
       featured: false,
     },
@@ -55,7 +54,7 @@ export function Catering() {
             </h2>
           </div>
           <p style={{ fontFamily: "var(--serif)", fontSize: 22, lineHeight: 1.3, margin: 0, color: "var(--paper)", textWrap: "pretty" }}>
-            Shiva. Shabbat. Sunday brunch. Office Mondays. We've been feeding the city for fifteen years — let us feed your people too.
+            Platters, full-service bris packages, brunch favourites, salads, pastries, and more for gatherings of every size.
           </p>
         </div>
 
@@ -78,7 +77,7 @@ export function Catering() {
               boxShadow: catering.accepting ? "0 0 0 4px rgba(93,122,60,.25)" : "none",
             }} />
             <div>
-              <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: ".22em", textTransform: "uppercase" }}>
+              <div style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".22em", textTransform: "uppercase" }}>
                 {catering.accepting ? "Accepting orders for this week" : "This week is closed"}
               </div>
               <div style={{ fontFamily: "var(--serif)", fontSize: 18, lineHeight: 1.15, marginTop: 4 }}>
@@ -89,7 +88,7 @@ export function Catering() {
             </div>
           </div>
           <a href={CATERING_PDF} target="_blank" rel="noopener" style={{
-            fontFamily: "var(--mono)", fontSize: 12, letterSpacing: ".14em",
+            fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".14em",
             textTransform: "uppercase", color: "var(--ink)",
             textDecoration: "none",
             padding: "8px 14px",
@@ -101,7 +100,7 @@ export function Catering() {
         <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 24 }}>
           <BubbySays color="var(--orange)" tilt={4} tail="br" style={{ maxWidth: 300 }}>
             "Did you eat? Did everyone eat?"<br/>
-            <span style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--paper)", display: "inline-block", marginTop: 6 }}>— Bubby, at every gathering</span>
+            <span style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--paper)", display: "inline-block", marginTop: 6 }}>— Bubby, at every gathering</span>
           </BubbySays>
         </div>
 
@@ -127,13 +126,13 @@ export function Catering() {
                   <Sticker color="var(--paper)" tilt={0}>MOST ORDERED</Sticker>
                 </div>
               )}
-              <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: ".2em", textTransform: "uppercase", opacity: .75 }}>
+              <div style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".2em", textTransform: "uppercase", opacity: .75 }}>
                 {t.serves}
               </div>
               <h3 style={{ fontFamily: "var(--display)", fontSize: 44, lineHeight: .9, margin: 0 }}>{t.name}</h3>
               <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
                 <div style={{ fontFamily: "var(--display)", fontSize: 56, lineHeight: 1 }}>${t.price}</div>
-                <div style={{ fontFamily: "var(--mono)", fontSize: 12, letterSpacing: ".14em", textTransform: "uppercase", opacity: .75 }}>
+                <div style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".14em", textTransform: "uppercase", opacity: .75 }}>
                   {t.perPerson ? "/ person" : "flat"}
                 </div>
               </div>

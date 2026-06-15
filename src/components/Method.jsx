@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { Bagel, SectionHeader } from "./atoms.jsx";
 import { BubbySays } from "./fun.jsx";
 import { useIsMobile } from "../hooks/useIsMobile.js";
@@ -27,7 +27,7 @@ function MethodCard({ num, title, time, body, accent, illustration }) {
       {illustration}
 
       <div style={{
-        fontFamily: "var(--mono)", fontSize: 12,
+        fontFamily: "var(--mono)", fontSize: 14,
         letterSpacing: ".18em", textTransform: "uppercase",
         color: "var(--lox-deep)",
       }}>{time}</div>
@@ -57,7 +57,7 @@ export function Method() {
           />
           <BubbySays color="var(--lox)" tilt={3} tail="bl" style={{ maxWidth: 320 }}>
             "If it doesn't take all day, it isn't a real bagel."<br/>
-            <span style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: ".14em", textTransform: "uppercase", display: "inline-block", marginTop: 8 }}>— a thing Bubby probably said</span>
+            <span style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".14em", textTransform: "uppercase", display: "inline-block", marginTop: 8 }}>— a thing Bubby probably said</span>
           </BubbySays>
         </div>
 
@@ -80,7 +80,7 @@ export function Method() {
                   boxShadow: "5px 5px 0 var(--ink)", position: "relative",
                 }}>
                   <div style={{ position: "absolute", top: 10, left: 10, right: 10, height: 50, border: "2.5px solid var(--ink)", borderRadius: 6, background: "var(--schmear)", display: "grid", placeItems: "center" }}>
-                    <span style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: ".1em" }}>4°C</span>
+                    <span style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".1em" }}>4°C</span>
                   </div>
                   <div style={{ position: "absolute", bottom: 10, left: 10, right: 10, top: 70, border: "2.5px solid var(--ink)", borderRadius: 6, background: "var(--schmear)", display:"grid", placeItems:"center" }}>
                     <div style={{ display:"flex", gap:6 }}>
@@ -182,7 +182,7 @@ export function Method() {
               borderRight: !isMobile && i < 3 ? "2.5px dashed var(--ink)" : "none",
               borderBottom: isMobile && i < 3 ? "2.5px dashed var(--ink)" : "none",
             }}>
-              <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: ".18em", color: "var(--lox-deep)" }}>{k}</div>
+              <div style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".18em", color: "var(--lox-deep)" }}>{k}</div>
               <div style={{ marginTop: 8, fontSize: 15, lineHeight: 1.35 }}>{v}</div>
             </div>
           ))}

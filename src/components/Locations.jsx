@@ -1,8 +1,66 @@
-import React from "react";
+﻿import React from "react";
 import { Btn, SectionHeader, Sticker } from "./atoms.jsx";
 import { HOURS_DISPLAY } from "../data/hours.js";
 import { useIsMobile } from "../hooks/useIsMobile.js";
 import { BRAND, BRAND_ASSETS } from "../brand.js";
+import { ORDER_URL } from "../order.js";
+
+const UBER_EATS_URL = "https://www.ubereats.com/ca/store/bubbys-new-york-bagels/tZF3PlKSROGmq4QkTG4AwQ";
+
+function LatestNewsForm() {
+  const [status, setStatus] = React.useState("idle");
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setStatus("submitting");
+    const form = event.currentTarget;
+    try {
+      const response = await fetch("/__forms.html", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(new FormData(form)).toString(),
+      });
+      if (!response.ok) throw new Error("Form submission failed");
+      form.reset();
+      setStatus("success");
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  return (
+    <form
+      id="latest-news-form"
+      name="latest-news"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      onSubmit={handleSubmit}
+      style={{ maxWidth: 620 }}
+    >
+      <input type="hidden" name="form-name" value="latest-news" />
+      <p hidden><label>Do not fill this out: <input name="bot-field" /></label></p>
+      <div style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--ink)", marginBottom: 10 }}>
+        Get the latest news
+      </div>
+      <div className="latest-news-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr auto", gap: 8 }}>
+        <label>
+          <span className="sr-only">Name</span>
+          <input className="news-input" type="text" name="name" placeholder="Name" autoComplete="name" required />
+        </label>
+        <label>
+          <span className="sr-only">Email</span>
+          <input className="news-input" type="email" name="email" placeholder="Email" autoComplete="email" required />
+        </label>
+        <button className="news-submit" type="submit" disabled={status === "submitting"}>
+          {status === "submitting" ? "Joining..." : "Join"}
+        </button>
+      </div>
+      {status === "success" && <p role="status" style={{ margin: "10px 0 0", fontSize: 14 }}>You're on the list.</p>}
+      {status === "error" && <p role="alert" style={{ margin: "10px 0 0", fontSize: 14 }}>Something went wrong. Please try again.</p>}
+    </form>
+  );
+}
 
 export function Locations() {
   const isMobile = useIsMobile();
@@ -29,7 +87,7 @@ export function Locations() {
             kicker="Two spots, one street · COR certified"
             title={<>Come visit<br/>the family.</>}
           />
-          <div style={{ fontFamily: "var(--mono)", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", maxWidth: 320, textAlign: "right" }}>
+          <div style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".18em", textTransform: "uppercase", maxWidth: 320, textAlign: "right" }}>
             We've been on Bathurst since 2011. Park, walk in, smell the oven. That's the whole experience.
           </div>
         </div>
@@ -68,15 +126,6 @@ export function Locations() {
                     filter: "contrast(.96) saturate(.85) sepia(.18)",
                   }}
                 ></iframe>
-                <div style={{
-                  position: "absolute", top: 10, left: 10,
-                  background: s.accent, border: "2px solid var(--ink)",
-                  padding: "4px 10px", borderRadius: 4,
-                  fontFamily: "var(--mono)", fontSize: 10, letterSpacing: ".18em", textTransform: "uppercase",
-                  boxShadow: "2px 2px 0 var(--ink)",
-                }}>
-                  YOU ARE HERE
-                </div>
               </div>
 
               <h3 style={{ fontFamily: "var(--display)", fontSize: 44, lineHeight: .92, margin: 0 }}>{s.name}</h3>
@@ -92,8 +141,8 @@ export function Locations() {
                 gap: 20,
               }}>
                 <div>
-                  <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--lox-deep)" }}>HOURS</div>
-                  <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 6, fontFamily: "var(--mono)", fontSize: 13, lineHeight: 1 }}>
+                  <div style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--lox-deep)" }}>HOURS</div>
+                  <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 6, fontFamily: "var(--mono)", fontSize: 14, lineHeight: 1 }}>
                     {s.hours.map(([d, h]) => (
                       <div key={d} style={{ display: "flex", justifyContent: "space-between", borderBottom: "1.5px dotted rgba(26,22,18,.4)", paddingBottom: 5 }}>
                         <span>{d}</span><span>{h}</span>
@@ -102,7 +151,7 @@ export function Locations() {
                   </div>
                 </div>
                 <div>
-                  <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--lox-deep)" }}>CALL</div>
+                  <div style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--lox-deep)" }}>CALL</div>
                   <a href={`tel:${s.phone.replace(/\D/g, "")}`} style={{
                     display: "block", marginTop: 8,
                     fontFamily: "var(--display)", fontSize: 28, lineHeight: 1,
@@ -124,6 +173,16 @@ export function Locations() {
 export function Footer() {
   const isMobile = useIsMobile();
   return (
+    <>
+    <section id="latest-news" style={{ background: "var(--mustard)", color: "var(--ink)", padding: isMobile ? "48px 0" : "64px 0", borderBottom: "2.5px solid var(--ink)" }}>
+      <div className="wrap" style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 32, alignItems: "center" }}>
+        <div>
+          <div className="eyebrow">Fresh from the oven</div>
+          <h2 className="h-sub" style={{ marginTop: 14 }}>News, specials,<br/>and schmear.</h2>
+        </div>
+        <LatestNewsForm />
+      </div>
+    </section>
     <footer style={{ background: "var(--ink)", color: "var(--paper)", paddingTop: isMobile ? 56 : 80, paddingBottom: 40, position: "relative", overflow: "hidden" }}>
       <div className="wrap">
         <div style={{ marginBottom: isMobile ? 36 : 60 }}>
@@ -146,13 +205,12 @@ export function Footer() {
               Real New York bagels, baked in Toronto. On Bathurst. Since 2011.
             </p>
             <div style={{ marginTop: 24, display: "flex", gap: 12, flexWrap: "wrap" }}>
-              {["UberEats", "DoorDash", "SkipTheDishes"].map(p => (
-                <span key={p} style={{
-                  fontFamily: "var(--mono)", fontSize: 11, letterSpacing: ".18em",
+              <a href={UBER_EATS_URL} target="_blank" rel="noopener" style={{
+                  fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".18em",
                   textTransform: "uppercase", padding: "8px 14px",
                   border: "2px solid var(--paper)", borderRadius: 999,
-                }}>{p}</span>
-              ))}
+                  color: "var(--paper)", textDecoration: "none",
+                }}>UberEats</a>
             </div>
 
             <div style={{
@@ -167,7 +225,7 @@ export function Footer() {
             }}>
               <a href="http://www.cor.ca/view/750/new_cor_restaurant_bubbys_bagels.html" target="_blank" rel="noopener" style={{ flex: "0 0 auto" }}>
                 <img
-                  src="https://static.wixstatic.com/media/88e84c_75f01374b9ec4275a91228cea4133711~mv2.jpg/v1/fill/w_240,h_204,q_90,enc_avif,quality_auto/88e84c_75f01374b9ec4275a91228cea4133711~mv2.jpg"
+                  src="/assets/cor.png"
                   alt="COR certified kosher"
                   style={{ width: 70, height: 60, objectFit: "contain", display: "block" }}
                 />
@@ -176,7 +234,7 @@ export function Footer() {
                 <div style={{ fontFamily: "var(--display)", fontSize: 22, lineHeight: 1, color: "var(--orange-deep)" }}>
                   Strictly Kosher
                 </div>
-                <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: ".14em", textTransform: "uppercase", marginTop: 4 }}>
+                <div style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".14em", textTransform: "uppercase", marginTop: 4 }}>
                   Dairy & fish · COR certified
                 </div>
               </div>
@@ -194,17 +252,17 @@ export function Footer() {
               ["3035 Bathurst", "#locations"],
               ["Hours", "#locations"],
               ["Directions", "https://maps.google.com/?q=3035+Bathurst+St,+Toronto,+ON"],
-              ["Order online", "https://taliupexpress.com/restaurants/162/standalone-menus"],
+              ["Order online", ORDER_URL],
             ]],
             ["FOLLOW", [
               ["Instagram", "https://www.instagram.com/bubbysnybagels/"],
               ["Facebook", "https://www.facebook.com/bubbysbagels"],
               ["Wholesale", "mailto:info@bubbysbagels.com?subject=Wholesale%20inquiry"],
-              ["Newsletter", "mailto:info@bubbysbagels.com?subject=Newsletter"],
+              ["Latest news", "#latest-news"],
             ]],
           ].map(([t, items]) => (
             <div key={t}>
-              <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: ".22em", textTransform: "uppercase", color: "var(--mustard)" }}>{t}</div>
+              <div style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".22em", textTransform: "uppercase", color: "var(--mustard)" }}>{t}</div>
               <ul style={{ listStyle: "none", padding: 0, margin: "16px 0 0", display: "flex", flexDirection: "column", gap: 8 }}>
                 {items.map(([label, href]) => (
                   <li key={label}>
@@ -226,7 +284,7 @@ export function Footer() {
           paddingTop: 24,
           borderTop: "2px dashed rgba(244,234,213,.3)",
           display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 16,
-          fontFamily: "var(--mono)", fontSize: 11, letterSpacing: ".14em", textTransform: "uppercase", color: "rgba(244,234,213,.7)",
+          fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".14em", textTransform: "uppercase", color: "rgba(244,234,213,.7)",
         }}>
           <div>© 2026 Bubby's Bagels · Bathurst Street, Toronto</div>
           <div>
@@ -241,5 +299,6 @@ export function Footer() {
         </div>
       </div>
     </footer>
+    </>
   );
 }

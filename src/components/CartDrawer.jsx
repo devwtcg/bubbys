@@ -1,10 +1,20 @@
 import React from "react";
 import { Bagel, Btn } from "./atoms.jsx";
+import { ORDER_URL } from "../order.js";
 
 export function CartDrawer({ open, items, onClose, onIncrement, onDecrement }) {
   const subtotal = items.reduce((s, it) => s + it.price * it.qty, 0);
   const tax = subtotal * 0.13;
   const total = subtotal + tax;
+  React.useEffect(() => {
+    if (!open) return undefined;
+    const closeOnEscape = (event) => {
+      if (event.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [open, onClose]);
+
   return (
     <>
       <div
@@ -18,7 +28,12 @@ export function CartDrawer({ open, items, onClose, onIncrement, onDecrement }) {
           transition: "opacity .25s var(--ease)",
         }}
       />
-      <aside style={{
+      <aside
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="ticket-title"
+        aria-hidden={!open}
+        style={{
         position: "fixed", top: 0, right: 0, bottom: 0,
         width: "min(420px, 92vw)",
         background: "var(--paper)",
@@ -36,12 +51,12 @@ export function CartDrawer({ open, items, onClose, onIncrement, onDecrement }) {
           background: "var(--mustard)",
         }}>
           <div>
-            <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: ".22em", textTransform: "uppercase" }}>Your ticket</div>
-            <div style={{ fontFamily: "var(--display)", fontSize: 32, lineHeight: 1, marginTop: 2 }}>
+            <div style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".22em", textTransform: "uppercase" }}>Your ticket</div>
+            <div id="ticket-title" style={{ fontFamily: "var(--display)", fontSize: 32, lineHeight: 1, marginTop: 2 }}>
               The Order
             </div>
           </div>
-          <button onClick={onClose} style={{
+          <button onClick={onClose} aria-label="Close ticket" style={{
             all: "unset", cursor: "pointer",
             width: 36, height: 36, borderRadius: "50%",
             border: "2.5px solid var(--ink)", background: "var(--paper)",
@@ -57,7 +72,7 @@ export function CartDrawer({ open, items, onClose, onIncrement, onDecrement }) {
                 <Bagel variant="plain" size={80} color="#d4a55a" color2="#a06c2c" />
               </div>
               Your ticket is empty.<br/>
-              <span style={{ fontFamily: "var(--mono)", fontSize: 12, letterSpacing: ".14em", textTransform: "uppercase" }}>Pick a bagel to begin</span>
+              <span style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".14em", textTransform: "uppercase" }}>Pick a bagel to begin</span>
             </div>
           ) : (
             <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 14 }}>
@@ -79,11 +94,11 @@ export function CartDrawer({ open, items, onClose, onIncrement, onDecrement }) {
                   )}
                   <div>
                     <div style={{ fontFamily: "var(--body)", fontWeight: 700, fontSize: 14, lineHeight: 1.1 }}>{it.name}</div>
-                    {it.sub && <div style={{ fontFamily: "var(--mono)", fontSize: 11, opacity: .65, marginTop: 4 }}>{it.sub}</div>}
+                    {it.sub && <div style={{ fontFamily: "var(--mono)", fontSize: 14, opacity: .65, marginTop: 4 }}>{it.sub}</div>}
                     <div style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 8 }}>
-                      <button onClick={() => onDecrement(it.key)} style={{ all: "unset", cursor: "pointer", width: 22, height: 22, borderRadius: 6, background: "var(--paper)", border: "1.5px solid var(--ink)", display: "grid", placeItems: "center", fontSize: 14 }}>−</button>
-                      <span style={{ fontFamily: "var(--mono)", fontSize: 13, minWidth: 18, textAlign: "center" }}>{it.qty}</span>
-                      <button onClick={() => onIncrement(it.key)} style={{ all: "unset", cursor: "pointer", width: 22, height: 22, borderRadius: 6, background: "var(--paper)", border: "1.5px solid var(--ink)", display: "grid", placeItems: "center", fontSize: 14 }}>+</button>
+                      <button aria-label={`Remove one ${it.name}`} onClick={() => onDecrement(it.key)} style={{ all: "unset", cursor: "pointer", width: 28, height: 28, borderRadius: 6, background: "var(--paper)", border: "1.5px solid var(--ink)", display: "grid", placeItems: "center", fontSize: 14 }}>−</button>
+                      <span style={{ fontFamily: "var(--mono)", fontSize: 14, minWidth: 18, textAlign: "center" }}>{it.qty}</span>
+                      <button aria-label={`Add one ${it.name}`} onClick={() => onIncrement(it.key)} style={{ all: "unset", cursor: "pointer", width: 28, height: 28, borderRadius: 6, background: "var(--paper)", border: "1.5px solid var(--ink)", display: "grid", placeItems: "center", fontSize: 14 }}>+</button>
                     </div>
                   </div>
                   <div style={{ fontFamily: "var(--display)", fontSize: 22, lineHeight: 1 }}>
@@ -101,25 +116,30 @@ export function CartDrawer({ open, items, onClose, onIncrement, onDecrement }) {
           background: "var(--paper-2)",
           display: "flex", flexDirection: "column", gap: 12,
         }}>
-          <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--mono)", fontSize: 12, letterSpacing: ".1em" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".1em" }}>
             <span>SUBTOTAL</span><span>${subtotal.toFixed(2)}</span>
           </div>
-          <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--mono)", fontSize: 12, letterSpacing: ".1em" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".1em" }}>
             <span>HST (13%)</span><span>${tax.toFixed(2)}</span>
           </div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", paddingTop: 8, borderTop: "2px dashed var(--ink)" }}>
             <span style={{ fontFamily: "var(--display)", fontSize: 24 }}>TOTAL</span>
             <span style={{ fontFamily: "var(--display)", fontSize: 36 }}>${total.toFixed(2)}</span>
           </div>
+          {items.length > 0 && (
+            <div style={{ padding: 12, background: "var(--schmear)", border: "2px solid var(--ink)", borderRadius: 8, fontSize: 14, lineHeight: 1.35 }}>
+              <strong>Your ticket is saved on this device.</strong> Clover Online Ordering opens separately and cannot receive these selections automatically.
+            </div>
+          )}
           <Btn
             variant="yellow"
             icon="→"
-            href="https://taliupexpress.com/restaurants/162/standalone-menus"
+            href={ORDER_URL}
             style={{ justifyContent: "center" }}
             onClick={(e) => {
               // Open the external ordering system in a new tab so the in-page cart isn't lost.
               e.preventDefault();
-              window.open("https://taliupexpress.com/restaurants/162/standalone-menus", "_blank", "noopener");
+              window.open(ORDER_URL, "_blank", "noopener");
             }}
           >Send to oven</Btn>
         </div>

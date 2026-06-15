@@ -1,5 +1,5 @@
 import React from "react";
-import { SectionHeader, Sticker } from "./atoms.jsx";
+import { Btn, SectionHeader, Sticker } from "./atoms.jsx";
 import { PHOTOS } from "../data/photos.js";
 
 export function Gallery() {
@@ -82,9 +82,16 @@ export function Gallery() {
         <div style={{ flex: "0 0 12px" }} />
       </div>
 
-      <div className="wrap" style={{ marginTop: 24, fontFamily: "var(--mono)", fontSize: 11, letterSpacing: ".18em", textTransform: "uppercase", opacity: .6 }}>
-        ← Drag, scroll, or swipe — there's more in the shop ·
-        <a href="https://www.instagram.com/bubbysnybagels/" style={{ color: "inherit", marginLeft: 8 }}>@bubbysnybagels</a>
+      <div className="wrap" style={{ marginTop: 24 }}>
+        <Btn
+          variant="yellow"
+          href="https://www.instagram.com/bubbysnybagels/"
+          target="_blank"
+          rel="noopener"
+          icon="↗"
+        >
+          Follow on Instagram
+        </Btn>
       </div>
     </section>
   );

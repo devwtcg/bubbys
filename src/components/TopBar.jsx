@@ -13,7 +13,7 @@ const NAV = [
 export function TopBar({ cartCount, onCartClick }) {
   const [scrolled, setScrolled] = React.useState(false);
   const [menuOpen, setMenuOpen] = React.useState(false);
-  const isMobile = useIsMobile();
+  const isCompact = useIsMobile(1280);
 
   React.useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 40);
@@ -22,7 +22,7 @@ export function TopBar({ cartCount, onCartClick }) {
   }, []);
 
   // Close drawer on resize back to desktop
-  React.useEffect(() => { if (!isMobile) setMenuOpen(false); }, [isMobile]);
+  React.useEffect(() => { if (!isCompact) setMenuOpen(false); }, [isCompact]);
 
   return (
     <header style={{
@@ -31,39 +31,14 @@ export function TopBar({ cartCount, onCartClick }) {
       borderBottom: scrolled ? "2.5px solid var(--ink)" : "2.5px solid transparent",
       transition: "border-color .2s",
     }}>
-      <div style={{
-        background: "var(--ink)", color: "var(--paper)",
-        fontFamily: "var(--mono)", fontSize: 12, letterSpacing: ".18em",
-        textTransform: "uppercase", padding: "8px 0", overflow: "hidden",
-      }}>
-        <div className="scroll-marquee">
-          {Array.from({ length: 2 }).map((_, k) => (
-            <React.Fragment key={k}>
-              <span>★ Baked fresh on Bathurst since 2011</span>
-              <span style={{opacity:.5}}>◯</span>
-              <span style={{ color: "var(--mustard)" }}>STRICTLY DAIRY & FISH · COR CERTIFIED</span>
-              <span style={{opacity:.5}}>◯</span>
-              <span>10× Best Bagel in the GTA</span>
-              <span style={{opacity:.5}}>◯</span>
-              <span>Kettle-boiled · Stone-oven · Wooden-board baked</span>
-              <span style={{opacity:.5}}>◯</span>
-              <span>Now slinging schmears 7 days a week</span>
-              <span style={{opacity:.5}}>◯</span>
-              <span>UberEats · DoorDash · SkipTheDishes</span>
-              <span style={{opacity:.5}}>◯</span>
-            </React.Fragment>
-          ))}
-        </div>
-      </div>
-
       <div className="wrap" style={{
         display: "grid",
-        gridTemplateColumns: isMobile ? "auto 1fr auto" : "auto 1fr auto",
+        gridTemplateColumns: "auto 1fr auto",
         alignItems: "center",
-        gap: isMobile ? 12 : 24,
-        padding: isMobile ? "12px 18px" : "18px 36px",
+        gap: isCompact ? 12 : 24,
+        padding: isCompact ? "12px 18px" : "18px 36px",
       }}>
-        <a href="#top" style={{ display: "flex", alignItems: "center", gap: isMobile ? 10 : 14, textDecoration: "none" }}>
+        <a href="#top" style={{ display: "flex", alignItems: "center", gap: isCompact ? 10 : 14, textDecoration: "none" }}>
           <img
             className="brand-logo brand-logo--nav"
             src={BRAND_ASSETS.horizontalColor}
@@ -72,7 +47,7 @@ export function TopBar({ cartCount, onCartClick }) {
         </a>
 
         {/* Desktop nav */}
-        {!isMobile && (
+        {!isCompact && (
           <nav style={{
             display: "flex", justifyContent: "center", gap: 36,
             fontFamily: "var(--body)", fontWeight: 700, fontSize: 14,
@@ -87,12 +62,12 @@ export function TopBar({ cartCount, onCartClick }) {
             ))}
           </nav>
         )}
-        {isMobile && <div />}
+        {isCompact && <div />}
 
-        <div style={{ display: "flex", gap: isMobile ? 8 : 12, alignItems: "center" }}>
-          {!isMobile && (
+        <div style={{ display: "flex", gap: isCompact ? 8 : 12, alignItems: "center" }}>
+          {!isCompact && (
             <a href="tel:4168622435" style={{
-              fontFamily: "var(--mono)", fontSize: 13, letterSpacing: ".06em",
+              fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".06em",
               textDecoration: "none", color: "var(--ink)",
               display: "flex", alignItems: "center", gap: 8,
             }}>
@@ -107,29 +82,29 @@ export function TopBar({ cartCount, onCartClick }) {
               border: "2.5px solid var(--ink)",
               background: "var(--mustard)",
               color: "var(--ink)",
-              padding: isMobile ? "8px 12px" : "10px 18px",
+              padding: isCompact ? "8px 12px" : "10px 18px",
               borderRadius: 999,
               fontFamily: "var(--body)",
               fontWeight: 800,
               letterSpacing: ".1em",
               textTransform: "uppercase",
-              fontSize: isMobile ? 12 : 13,
+              fontSize: 14,
               cursor: "pointer",
               boxShadow: "0 4px 0 var(--ink)",
               display: "flex",
               alignItems: "center",
-              gap: isMobile ? 6 : 10,
+              gap: isCompact ? 6 : 10,
             }}
           >
             <span>Order</span>
             <span style={{
               background: "var(--ink)", color: "var(--paper)",
               borderRadius: 999, minWidth: 22, padding: "2px 7px",
-              fontSize: 12, textAlign: "center",
+              fontSize: 14, textAlign: "center",
               fontFeatureSettings: '"tnum"',
             }}>{cartCount}</span>
           </button>
-          {isMobile && (
+          {isCompact && (
             <button
               onClick={() => setMenuOpen((v) => !v)}
               aria-label={menuOpen ? "Close menu" : "Open menu"}
@@ -158,7 +133,7 @@ export function TopBar({ cartCount, onCartClick }) {
       </div>
 
       {/* Mobile nav drawer */}
-      {isMobile && menuOpen && (
+      {isCompact && menuOpen && (
         <nav style={{
           background: "var(--paper)",
           borderTop: "2.5px solid var(--ink)",

@@ -89,7 +89,7 @@
     .pl-wordmark .apos { color: #7F9FB6; }
     .pl-status {
       font-family: "Figtree", Helvetica, Arial, sans-serif;
-      font-size: 13px;
+      font-size: 14px;
       letter-spacing: .22em;
       text-transform: uppercase;
       color: #4F7A96;
@@ -144,6 +144,13 @@
   </script>
 
   <div id="root"></div>
+
+  <form name="latest-news" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="latest-news" />
+    <input type="text" name="name" />
+    <input type="email" name="email" />
+    <input name="bot-field" />
+  </form>
 
   <script type="module" src="/src/main.jsx"></script>
 </body>

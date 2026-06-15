@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { Eyebrow, StarBurst } from "./atoms.jsx";
 import { Tape } from "./fun.jsx";
 import { PHOTOS } from "../data/photos.js";
@@ -61,7 +61,7 @@ export function Story() {
             lineHeight: 1.5,
             position: "relative",
           }}>
-            <div style={{ position: "absolute", top: -22, left: 24, padding: "4px 10px", background: "var(--paper)", border: "2.5px solid var(--ink)", borderRadius: 6, fontFamily: "var(--mono)", fontSize: 10, letterSpacing: ".18em", textTransform: "uppercase" }}>
+            <div style={{ position: "absolute", top: -22, left: 24, padding: "4px 10px", background: "var(--paper)", border: "2.5px solid var(--ink)", borderRadius: 6, fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".18em", textTransform: "uppercase" }}>
               FROM THE KITCHEN
             </div>
             <p style={{ margin: 0 }}>
@@ -73,7 +73,7 @@ export function Story() {
             <p style={{ marginTop: 18, marginBottom: 0, fontFamily: "var(--hand)", fontSize: 36, lineHeight: 1, transform: "rotate(-1deg)" }}>
               Thanks for eating with us.
             </p>
-            <div style={{ marginTop: 12, fontFamily: "var(--mono)", fontSize: 12, letterSpacing: ".14em", textTransform: "uppercase" }}>
+            <div style={{ marginTop: 12, fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".14em", textTransform: "uppercase" }}>
               — The Bubby's family · Toronto, ON
             </div>
           </div>
@@ -86,7 +86,7 @@ export function Story() {
             ].map(([n, l]) => (
               <div key={n} style={{ borderTop: "2.5px solid var(--ink)", paddingTop: 14 }}>
                 <div style={{ fontFamily: "var(--display)", fontSize: 44, lineHeight: 1 }}>{n}</div>
-                <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: ".14em", textTransform: "uppercase", marginTop: 4 }}>{l}</div>
+                <div style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".14em", textTransform: "uppercase", marginTop: 4 }}>{l}</div>
               </div>
             ))}
           </div>

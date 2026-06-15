@@ -53,7 +53,7 @@ export function Hero() {
               style={{
                 display: "inline-flex", alignItems: "center", gap: 8,
                 padding: "6px 12px", background: openColor, color: "var(--paper)",
-                fontFamily: "var(--mono)", fontSize: 11, letterSpacing: ".22em", textTransform: "uppercase",
+                fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".18em", textTransform: "uppercase",
                 border: "2px solid var(--ink)", borderRadius: 4,
                 boxShadow: "3px 3px 0 var(--ink)",
                 whiteSpace: "nowrap",
@@ -71,7 +71,7 @@ export function Hero() {
               )}
             </span>
           </div>
-          <div style={{ fontFamily: "var(--mono)", fontSize: isMobile ? 10 : 12, letterSpacing: ".18em", textTransform: "uppercase" }}>
+          <div style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".18em", textTransform: "uppercase" }}>
             EST. 2011 · TORONTO · ONT
           </div>
         </div>
@@ -79,25 +79,24 @@ export function Hero() {
         {/* MEGA WORDMARK */}
         <h1
           className="h-display"
+          aria-label="Bubby's New York Bagels"
           style={{
             marginTop: isMobile ? 20 : 32,
             fontSize: isMobile
-              ? "clamp(56px, 17vw, 96px)"
-              : "clamp(96px, 17.5vw, 280px)",
-            lineHeight: .82,
+              ? "clamp(46px, 14vw, 78px)"
+              : "clamp(80px, 13vw, 205px)",
+            lineHeight: .84,
             color: "var(--ink)",
             letterSpacing: 0,
             position: "relative",
             wordBreak: "keep-all",
           }}
         >
-          BUBB
-          <span style={{ position: "relative", display: "inline-block" }}>Y</span>
-          <span style={{ color: "var(--orange)" }}>'</span>
-          S
+          BUBBY'S
           <br />
-          BAGEL
-          <span style={{ color: "var(--orange)" }}>S.</span>
+          NEW YORK
+          <br />
+          BAGELS
         </h1>
         <div style={{ marginTop: 12, marginLeft: 4 }}>
           <Squiggle width={isMobile ? 240 : 420} height={isMobile ? 14 : 18} color="var(--orange)" />
@@ -195,7 +194,7 @@ export function Hero() {
                     minWidth: isMobile ? "auto" : 90,
                   }}>{n}</div>
                   <div style={{
-                    fontFamily: "var(--mono)", fontSize: isMobile ? 10 : 12,
+                    fontFamily: "var(--mono)", fontSize: 14,
                     letterSpacing: ".14em", textTransform: "uppercase",
                     whiteSpace: "pre-line", lineHeight: 1.2,
                   }}>{l}</div>

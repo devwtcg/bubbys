@@ -26,14 +26,14 @@ export function Sticker({ children, color = "var(--mustard)", tilt = -3, style =
   );
 }
 
-export function Btn({ children, variant = "dark", href = "#", icon = "→", as = "a", onClick, style = {} }) {
+export function Btn({ children, variant = "dark", href = "#", icon = "→", as = "a", onClick, style = {}, ...props }) {
   const cls = variant === "yellow" ? "btn btn-yellow"
             : variant === "pink"   ? "btn btn-pink"
             : variant === "ghost"  ? "btn btn-ghost"
             : "btn";
   const Tag = as;
   return (
-    <Tag className={cls} href={href} onClick={onClick} style={style}>
+    <Tag className={cls} href={href} onClick={onClick} style={style} {...props}>
       <span>{children}</span>
       {icon && <span className="arrow">{icon}</span>}
     </Tag>

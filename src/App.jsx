@@ -12,10 +12,26 @@ import { Story } from "./components/Story.jsx";
 import { Locations, Footer } from "./components/Locations.jsx";
 import { CartDrawer } from "./components/CartDrawer.jsx";
 import { BAGELS } from "./data/menu.js";
+import { ORDER_URL } from "./order.js";
+
+const CART_STORAGE_KEY = "bubbys-cart-v1";
+
+function loadCart() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(CART_STORAGE_KEY));
+    return Array.isArray(saved) ? saved : [];
+  } catch {
+    return [];
+  }
+}
 
 export default function App() {
-  const [items, setItems] = React.useState([]);
+  const [items, setItems] = React.useState(loadCart);
   const [cartOpen, setCartOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
+  }, [items]);
 
   const addItem = (item) => {
     setItems((prev) => {
@@ -39,6 +55,11 @@ export default function App() {
       key, name, sub, price,
       icon: { variant: bagel.variant, color: bagel.color, color2: bagel.color2 },
     });
+  };
+
+  const onOrderCombo = (bagel, schmear) => {
+    onAddCombo(bagel, schmear);
+    window.open(ORDER_URL, "_blank", "noopener");
   };
 
   const onAddSandwich = (s) => {
@@ -70,14 +91,14 @@ export default function App() {
       <div style={{ background: "var(--paper)", padding: "0 0 30px", overflow: "hidden" }}>
         <BannerStrip
           items={["YUM YUM YUM", "★ NOSH NOSH NOSH ★", "EAT EAT EAT", "★ MMMMM ★", "SCHMEAR ME UP", "★ EVERYTHING EVERYTHING ★"]}
-          color="var(--orange)" textColor="var(--paper)" tilt={-2}
+          color="var(--orange)" textColor="var(--paper)" tilt={0}
         />
       </div>
-      <BuildABagel onAddCombo={onAddCombo} />
+      <BuildABagel onAddCombo={onAddCombo} onOrderCombo={onOrderCombo} />
       <div style={{ background: "var(--paper)", padding: "30px 0", overflow: "hidden" }}>
         <BannerStrip
           items={["SANDWICH O'CLOCK", "★ TIME TO EAT ★", "PILE IT ON!", "★ BIG BITE ENERGY ★", "GIVE ME EVERYTHING", "★ SCHMEAR DELUXE ★"]}
-          color="var(--pickle)" textColor="var(--paper)" tilt={2} speed={32}
+          color="var(--pickle)" textColor="var(--paper)" tilt={0} speed={32}
         />
       </div>
       <Sandwiches onAddSandwich={onAddSandwich} />

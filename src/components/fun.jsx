@@ -88,7 +88,7 @@ export function Tape({ color = "rgba(236,107,44,.6)", w = 80, tilt = -15, style 
   );
 }
 
-export function BannerStrip({ items, color = "var(--orange)", textColor = "var(--paper)", speed = 28, tilt = -2 }) {
+export function BannerStrip({ items, color = "var(--orange)", textColor = "var(--paper)", speed = 28, tilt = 0 }) {
   return (
     <div style={{
       position: "relative",
@@ -99,11 +99,8 @@ export function BannerStrip({ items, color = "var(--orange)", textColor = "var(-
       padding: "20px 0",
       overflow: "hidden",
       transform: `rotate(${tilt}deg)`,
-      marginTop: -8,
-      marginBottom: -8,
-      marginLeft: "-4%",
-      marginRight: "-4%",
-      width: "108%",
+      margin: 0,
+      width: "100%",
       zIndex: 2,
     }}>
       <div className="scroll-marquee" style={{
