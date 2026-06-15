@@ -117,6 +117,27 @@ body::before {
   background: var(--paper);
 }
 
+.award-mention {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.award-laurel {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  fill: none;
+  stroke: var(--mustard);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.award-laurel:last-child {
+  transform: scaleX(-1);
+}
+
 .surface-paper { background: var(--paper); color: var(--ink); }
 .surface-cream { background: var(--schmear); color: var(--ink); }
 .surface-tan { background: var(--paper-2); color: var(--ink); }

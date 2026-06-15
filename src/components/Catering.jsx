@@ -4,7 +4,7 @@ import { BubbySays, SeedScatter } from "./fun.jsx";
 import { useStoreOpen } from "../hooks/useStoreOpen.js";
 import { useIsMobile } from "../hooks/useIsMobile.js";
 
-const CATERING_PDF = "https://www.bubbysbagels.com/_files/ugd/88e84c_4501928e665a4cc8878a32da3a2001e1.pdf";
+const CATERING_PDF = "/assets/bubbys-catering-menu.pdf";
 
 export function Catering() {
   const { catering } = useStoreOpen();
@@ -87,7 +87,7 @@ export function Catering() {
               </div>
             </div>
           </div>
-          <a href={CATERING_PDF} target="_blank" rel="noopener" style={{
+          <a href={CATERING_PDF} download="Bubbys-Catering-Menu.pdf" style={{
             fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".14em",
             textTransform: "uppercase", color: "var(--ink)",
             textDecoration: "none",
