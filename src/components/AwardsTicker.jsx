@@ -4,18 +4,14 @@ function LaurelIcon() {
   return (
     <svg
       className="award-laurel"
-      viewBox="0 0 48 48"
+      viewBox="0 0 24 48"
       aria-hidden="true"
       focusable="false"
     >
       <path d="M18 39C9 34 6 24 10 13" />
-      <path d="M30 39c9-5 12-15 8-26" />
       <path d="M12 31c-4 0-7-2-8-5 4-1 7 0 9 3" />
       <path d="M10 23c-3-1-5-4-5-7 4 0 7 2 8 5" />
       <path d="M12 16c-2-3-2-6 0-9 3 2 4 5 3 8" />
-      <path d="M36 31c4 0 7-2 8-5-4-1-7 0-9 3" />
-      <path d="M38 23c3-1 5-4 5-7-4 0-7 2-8 5" />
-      <path d="M36 16c2-3 2-6 0-9-3 2-4 5-3 8" />
     </svg>
   );
 }
