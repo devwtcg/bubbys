@@ -120,16 +120,17 @@ body::before {
 .award-mention {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 2px;
+  line-height: 1;
 }
 
 .award-laurel {
-  width: 18px;
-  height: 28px;
-  flex: 0 0 18px;
+  width: 28px;
+  height: 46px;
+  flex: 0 0 28px;
   fill: none;
   stroke: var(--mustard);
-  stroke-width: 2.4;
+  stroke-width: 2.8;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
