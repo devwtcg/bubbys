@@ -15,10 +15,10 @@ function LatestNewsForm() {
     setStatus("submitting");
     const form = event.currentTarget;
     try {
-      const response = await fetch("/__forms.html", {
+      const response = await fetch("/api/newsletter", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(new FormData(form)).toString(),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(Object.fromEntries(new FormData(form))),
       });
       if (!response.ok) throw new Error("Form submission failed");
       form.reset();
@@ -32,14 +32,10 @@ function LatestNewsForm() {
     <form
       id="latest-news-form"
       name="latest-news"
-      method="POST"
-      data-netlify="true"
-      netlify-honeypot="bot-field"
       onSubmit={handleSubmit}
       style={{ maxWidth: 620 }}
     >
-      <input type="hidden" name="form-name" value="latest-news" />
-      <p hidden><label>Do not fill this out: <input name="bot-field" /></label></p>
+      <p hidden><label>Do not fill this out: <input name="website" /></label></p>
       <div style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--ink)", marginBottom: 10 }}>
         Get the latest news
       </div>

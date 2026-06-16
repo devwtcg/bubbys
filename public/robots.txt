@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bubbys-mauve.vercel.app/sitemap.xml

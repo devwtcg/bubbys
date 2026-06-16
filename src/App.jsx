@@ -13,6 +13,16 @@ import { Locations, Footer } from "./components/Locations.jsx";
 import { CartDrawer } from "./components/CartDrawer.jsx";
 import { BAGELS } from "./data/menu.js";
 import { ORDER_URL } from "./order.js";
+import {
+  AboutPage,
+  BlogStubPage,
+  CateringPage,
+  ContactPage,
+  HomePage,
+  JsonLd,
+  MenuPage,
+  META,
+} from "./pages.jsx";
 
 const CART_STORAGE_KEY = "bubbys-cart-v1";
 
@@ -25,7 +35,23 @@ function loadCart() {
   }
 }
 
-export default function App() {
+function usePageMeta(pathname) {
+  React.useEffect(() => {
+    const meta = META[pathname] || META["/"];
+    document.title = meta.title;
+    const desc = document.querySelector('meta[name="description"]');
+    if (desc) desc.setAttribute("content", meta.description);
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute("href", `https://bubbys-mauve.vercel.app${pathname === "/" ? "/" : pathname}`);
+  }, [pathname]);
+}
+
+function LandingPage() {
   const [items, setItems] = React.useState(loadCart);
   const [cartOpen, setCartOpen] = React.useState(false);
 
@@ -84,7 +110,7 @@ export default function App() {
 
   return (
     <div className="page">
-      <TopBar cartCount={cartCount} onCartClick={() => setCartOpen(true)} />
+      <TopBar landing cartCount={cartCount} onCartClick={() => setCartOpen(true)} />
       <Hero />
       <AwardsTicker />
       <Method />
@@ -107,7 +133,6 @@ export default function App() {
       <Story />
       <Locations />
       <Footer />
-
       <CartDrawer
         open={cartOpen}
         items={items}
@@ -115,6 +140,29 @@ export default function App() {
         onIncrement={onInc}
         onDecrement={onDec}
       />
+    </div>
+  );
+}
+
+function CurrentPage({ pathname }) {
+  if (pathname === "/landing") return <LandingPage />;
+  if (pathname === "/about") return <AboutPage />;
+  if (pathname === "/menu") return <MenuPage />;
+  if (pathname === "/catering") return <CateringPage />;
+  if (pathname === "/contact") return <ContactPage />;
+  if (pathname === "/blog/category/recipes") return <BlogStubPage kind="recipes" />;
+  if (pathname === "/blog/category/news") return <BlogStubPage kind="news" />;
+  if (pathname === "/blog") return <BlogStubPage kind="blog" />;
+  return <HomePage />;
+}
+
+export default function App() {
+  const pathname = window.location.pathname.replace(/\/$/, "") || "/";
+  usePageMeta(pathname);
+  return (
+    <div className="page">
+      <JsonLd />
+      <CurrentPage pathname={pathname} />
     </div>
   );
 }

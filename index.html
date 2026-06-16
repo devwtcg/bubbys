@@ -2,156 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Bubby's New York Bagels - Toronto</title>
+  <title>Bubby's Bagels Toronto | Authentic NYC Bagels</title>
+  <meta name="description" content="Authentic New York bagels in Toronto, baked fresh daily on Bathurst. View the menu, order online, or plan catering for your next event." />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+  <link rel="canonical" href="https://bubbys-mauve.vercel.app/" />
+  <meta property="og:title" content="Bubby's Bagels Toronto | Authentic NYC Bagels" />
+  <meta property="og:description" content="Fresh New York bagels, breakfast, lunch, and catering on Bathurst in Toronto." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/assets/bubbys-badge-v1.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&family=Fraunces:opsz,wght@9,400;9,700;9,800;9,900&family=Lobster&display=swap" rel="stylesheet">
-
   <link rel="icon" href="/assets/bubbys-badge-v1.png" />
-
-  <style>
-    html.no-grain body::before { display: none !important; }
-    html.no-stickers .sticker { display: none !important; }
-    html.no-spin [style*="wiggle"] { animation: none !important; }
-
-    #preloader {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      background: #F0E4DA;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 28px;
-      transition: opacity .55s ease, visibility .55s ease;
-    }
-    #preloader.gone {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-    .pl-bagel {
-      position: relative;
-      width: 160px;
-      height: 160px;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 35% 30%, rgba(255,255,255,.5) 0 6%, transparent 22%),
-        radial-gradient(circle at 70% 70%, rgba(0,0,0,.18) 0 6%, transparent 24%),
-        radial-gradient(circle at 50% 50%, #d4a55a, #a06c2c);
-      border: 4px solid #3D3427;
-      box-shadow: 0 10px 0 #3D3427;
-      animation: pl-bounce 1.1s ease-in-out infinite, pl-spin 6s linear infinite;
-    }
-    .pl-bagel::before {
-      content: "";
-      position: absolute;
-      inset: 8%;
-      border-radius: 50%;
-      background-image:
-        radial-gradient(circle at 22% 18%, #1a1612 0 1.6px, transparent 2px),
-        radial-gradient(circle at 78% 28%, #f1e0b3 0 1.6px, transparent 2px),
-        radial-gradient(circle at 65% 72%, #1a1612 0 1.6px, transparent 2px),
-        radial-gradient(circle at 31% 68%, #f1e0b3 0 1.6px, transparent 2px),
-        radial-gradient(circle at 50% 12%, #6b3a1c 0 1.8px, transparent 2.2px),
-        radial-gradient(circle at 88% 55%, #1a1612 0 1.6px, transparent 2px),
-        radial-gradient(circle at 14% 44%, #d9c277 0 1.6px, transparent 2px),
-        radial-gradient(circle at 45% 82%, #6b3a1c 0 1.6px, transparent 2px),
-        radial-gradient(circle at 36% 28%, #1a1612 0 1.4px, transparent 1.8px),
-        radial-gradient(circle at 70% 50%, #f1e0b3 0 1.4px, transparent 1.8px);
-    }
-    .pl-bagel::after {
-      content: "";
-      position: absolute;
-      left: 50%; top: 50%;
-      transform: translate(-50%, -50%);
-      width: 28%; height: 28%;
-      border-radius: 50%;
-      background: #F0E4DA;
-      border: 3.5px solid #3D3427;
-      box-shadow: inset 0 4px 6px rgba(0,0,0,.18);
-    }
-    @keyframes pl-spin   { to { transform: rotate(360deg); } }
-    @keyframes pl-bounce {
-      0%, 100% { transform: translateY(0); }
-      50%      { transform: translateY(-18px); }
-    }
-    .pl-wordmark {
-      font-family: "Fraunces", Georgia, serif;
-      font-size: 64px;
-      line-height: .9;
-      color: #3D3427;
-      letter-spacing: 0;
-    }
-    .pl-wordmark .apos { color: #7F9FB6; }
-    .pl-status {
-      font-family: "Figtree", Helvetica, Arial, sans-serif;
-      font-size: 14px;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: #4F7A96;
-      min-height: 16px;
-    }
-    .pl-track {
-      width: 220px;
-      height: 8px;
-      border: 2.5px solid #3D3427;
-      border-radius: 999px;
-      overflow: hidden;
-      background: #E0CEBD;
-    }
-    .pl-track-fill {
-      width: 0;
-      height: 100%;
-      background: #7F9FB6;
-      animation: pl-fill 1.6s ease-out forwards;
-    }
-    @keyframes pl-fill {
-      from { width: 0; }
-      to   { width: 100%; }
-    }
-  </style>
 </head>
 <body>
-  <div id="preloader" aria-hidden="true">
-    <div class="pl-bagel"></div>
-    <div class="pl-wordmark">BUBBY<span class="apos">'</span>S</div>
-    <div class="pl-track"><div class="pl-track-fill"></div></div>
-    <div class="pl-status" id="pl-status">BOILING</div>
-  </div>
-
-  <script>
-    (function () {
-      const states = ["BOILING", "PROOFING", "BAKING", "ALMOST OUT"];
-      let i = 0;
-      const el = document.getElementById("pl-status");
-      const t = setInterval(() => {
-        i = (i + 1) % states.length;
-        if (el) el.textContent = states[i];
-      }, 420);
-      const dismiss = () => {
-        clearInterval(t);
-        const pl = document.getElementById("preloader");
-        if (pl) pl.classList.add("gone");
-      };
-      const minDelay = new Promise((r) => setTimeout(r, 1700));
-      const fontsReady = (document.fonts && document.fonts.ready) || Promise.resolve();
-      Promise.all([minDelay, fontsReady]).then(dismiss);
-    })();
-  </script>
-
   <div id="root"></div>
-
-  <form name="latest-news" data-netlify="true" netlify-honeypot="bot-field" hidden>
-    <input type="hidden" name="form-name" value="latest-news" />
-    <input type="text" name="name" />
-    <input type="email" name="email" />
-    <input name="bot-field" />
-  </form>
-
   <script type="module" src="/src/main.jsx"></script>
 </body>
 </html>
