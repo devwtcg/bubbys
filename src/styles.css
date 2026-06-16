@@ -730,6 +730,191 @@ body::before {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.menu-explorer,
+.catering-explorer {
+  margin-top: 42px;
+  border: 2.5px solid var(--ink);
+  border-radius: var(--radius-xl);
+  background: var(--schmear);
+  box-shadow: var(--shadow-hard-lg);
+  overflow: hidden;
+}
+
+.menu-explorer__tabs {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  border-bottom: 2.5px solid var(--ink);
+  background: var(--paper);
+}
+
+.menu-explorer__tabs button {
+  appearance: none;
+  border: 0;
+  border-right: 2.5px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  padding: 16px 22px;
+  font-family: var(--body);
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.menu-explorer__tabs button[aria-selected="true"] {
+  background: var(--mustard);
+}
+
+.menu-explorer__body,
+.catering-explorer {
+  display: grid;
+  grid-template-columns: minmax(320px, .9fr) minmax(0, 1.1fr);
+  align-items: stretch;
+}
+
+.menu-explorer__visual,
+.catering-explorer__preview {
+  position: relative;
+  min-height: 520px;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 25% 30%, rgba(127,159,182,.28), transparent 32%),
+    radial-gradient(circle at 76% 70%, rgba(197,216,230,.45), transparent 30%),
+    var(--paper);
+  border-right: 2.5px solid var(--ink);
+  overflow: hidden;
+}
+
+.menu-explorer--compact .menu-explorer__visual,
+.catering-explorer--compact .catering-explorer__preview {
+  min-height: 420px;
+}
+
+.menu-explorer__visual .sticker {
+  position: absolute;
+  top: 22px;
+  left: 22px;
+}
+
+.menu-explorer__visual img,
+.catering-explorer__preview img {
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  object-fit: cover;
+}
+
+.catering-explorer__preview img[src$=".svg"] {
+  object-fit: contain;
+  padding: 24px;
+  background: var(--paper);
+}
+
+.menu-explorer__content,
+.catering-explorer__content {
+  padding: clamp(28px, 4vw, 52px);
+}
+
+.menu-explorer__content h3,
+.catering-explorer__content h3 {
+  margin: 14px 0 0;
+  font-family: var(--display);
+  font-size: clamp(38px, 5vw, 72px);
+  line-height: 1.02;
+}
+
+.menu-explorer__content > p,
+.catering-explorer__content > p {
+  font-size: 18px;
+  line-height: 1.45;
+  margin: 14px 0 0;
+}
+
+.menu-explorer__selected {
+  margin-top: 24px;
+  padding: 20px;
+  border: 2.5px dashed var(--ink);
+  border-radius: var(--radius-md);
+  background: var(--paper);
+}
+
+.menu-explorer__selected span,
+.catering-explorer__meta span,
+.catering-explorer__items small,
+.menu-explorer__items small {
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--orange-deep);
+}
+
+.menu-explorer__selected strong,
+.catering-explorer__meta strong {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--display);
+  font-size: 34px;
+  line-height: 1;
+}
+
+.menu-explorer__selected p {
+  margin: 8px 0 0;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.menu-explorer__items,
+.catering-explorer__items {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.menu-explorer__items button,
+.catering-explorer__items button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  min-height: 70px;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  color: var(--ink);
+  padding: 12px 14px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.menu-explorer__items button[aria-pressed="true"],
+.catering-explorer__items button[aria-pressed="true"] {
+  background: var(--mustard);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.menu-explorer__items span,
+.catering-explorer__items span {
+  font-family: var(--body);
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.catering-explorer__meta {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
 .menu-preview-card,
 .catering-card {
   min-height: 245px;
@@ -1085,6 +1270,8 @@ a { color: inherit; }
 
   .feature-grid,
   .menu-preview-grid,
+  .menu-explorer__body,
+  .catering-explorer,
   .catering-grid,
   .faq-grid,
   .photo-grid {
@@ -1118,6 +1305,10 @@ a { color: inherit; }
 
   .feature-grid,
   .menu-preview-grid,
+  .menu-explorer__body,
+  .catering-explorer,
+  .menu-explorer__items,
+  .catering-explorer__items,
   .bagel-display-grid,
   .catering-grid,
   .faq-grid,

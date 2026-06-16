@@ -90,6 +90,47 @@ const cateringItems = [
   },
 ];
 
+const menuCategories = [
+  {
+    id: "bagels",
+    label: "Bagels & Spreads",
+    title: "The whole bagel lineup.",
+    lede: "Single bagels, half dozens, dozens, and house-made schmears for breakfast, lunch, or the family table.",
+    items: BAGELS.map((bagel) => ({
+      id: bagel.id,
+      name: bagel.name,
+      detail: bagel.note || "Fresh daily",
+      price: `$${bagel.price.toFixed(2)} each`,
+      bagel,
+    })),
+  },
+  {
+    id: "sandwiches",
+    label: "Breakfast & Lunch",
+    title: "Fresh Bagels, Sandwiches, Breakfast & Lunch",
+    lede: "Breakfast favourites, wraps, tuna, lox, and signature classics from the store menu.",
+    items: SANDWICHES.map((item) => ({
+      id: item.id,
+      name: item.name,
+      detail: item.desc,
+      price: `$${item.price.toFixed(2)}`,
+      item,
+    })),
+  },
+  {
+    id: "bakery",
+    label: "Pastries & Drinks",
+    title: "Pastries, drinks, coffee and deli favourites.",
+    lede: "Round out the order with bakery items, salads, drinks, and coffee. Availability can vary by day.",
+    items: [
+      { id: "coffee", name: "Coffee", detail: "Fresh coffee for breakfast, meetings, and catering add-ons.", price: "See menu" },
+      { id: "pastries", name: "Pastries", detail: "Bakery favourites for the counter, meetings, and brunch spreads.", price: "See menu" },
+      { id: "salads", name: "Salads & Pastas", detail: "Prepared sides for lunch orders and catering spreads.", price: "See menu" },
+      { id: "drinks", name: "Cold Drinks", detail: "Bottled drinks and grab-and-go options.", price: "See menu" },
+    ],
+  },
+];
+
 function ExternalLink({ href, children, className = "text-link" }) {
   return (
     <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noopener" : undefined} className={className}>
@@ -164,6 +205,123 @@ function MenuPreviewGrid({ limit = 6 }) {
           <strong>${item.price.toFixed(2)}</strong>
         </article>
       ))}
+    </div>
+  );
+}
+
+function MenuExplorer({ compact = false }) {
+  const [categoryId, setCategoryId] = React.useState("bagels");
+  const [selectedId, setSelectedId] = React.useState("everything");
+  const category = menuCategories.find((item) => item.id === categoryId) || menuCategories[0];
+  const selected = category.items.find((item) => item.id === selectedId) || category.items[0];
+
+  React.useEffect(() => {
+    setSelectedId(category.items[0]?.id);
+  }, [categoryId]);
+
+  const selectedBagel = selected?.bagel || BAGELS.find((bagel) => bagel.id === "everything") || BAGELS[0];
+
+  return (
+    <div className={`menu-explorer ${compact ? "menu-explorer--compact" : ""}`}>
+      <div className="menu-explorer__tabs" role="tablist" aria-label="Menu categories">
+        {menuCategories.map((item) => (
+          <button
+            key={item.id}
+            type="button"
+            role="tab"
+            aria-selected={item.id === categoryId}
+            onClick={() => setCategoryId(item.id)}
+          >
+            {item.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="menu-explorer__body">
+        <div className="menu-explorer__visual">
+          {category.id === "bagels" ? (
+            <Bagel
+              variant={selectedBagel.variant}
+              size={compact ? 210 : 270}
+              color={selectedBagel.color}
+              color2={selectedBagel.color2}
+            />
+          ) : (
+            <img
+              src={category.id === "sandwiches" ? PHOTOS.sandwich1 : PHOTOS.display}
+              alt={`${category.label} from Bubby's Bagels`}
+            />
+          )}
+          <Sticker color="var(--mustard)" tilt={-5}>{category.label}</Sticker>
+        </div>
+
+        <div className="menu-explorer__content">
+          <Eyebrow>{category.label}</Eyebrow>
+          <h3>{category.title}</h3>
+          <p>{category.lede}</p>
+          <div className="menu-explorer__selected">
+            <span>{selected?.price}</span>
+            <strong>{selected?.name}</strong>
+            <p>{selected?.detail}</p>
+          </div>
+          <div className="menu-explorer__items">
+            {category.items.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                aria-pressed={item.id === selected?.id}
+                onClick={() => setSelectedId(item.id)}
+              >
+                <span>{item.name}</span>
+                <small>{item.price}</small>
+              </button>
+            ))}
+          </div>
+          <div className="button-row">
+            <Btn href="/menu" variant="yellow">View Full Menu</Btn>
+            <Btn href={ORDER_URL} variant="ghost">Order Online</Btn>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CateringExplorer({ compact = false }) {
+  const [selectedName, setSelectedName] = React.useState(cateringItems[0].name);
+  const selected = cateringItems.find((item) => item.name === selectedName) || cateringItems[0];
+
+  return (
+    <div className={`catering-explorer ${compact ? "catering-explorer--compact" : ""}`}>
+      <div className="catering-explorer__preview">
+        <img src={compact ? PHOTOS.loxSpread : CATERING_SVG} alt="Bubby's Bagels catering menu and platters" />
+      </div>
+      <div className="catering-explorer__content">
+        <Eyebrow>Popular catering</Eyebrow>
+        <h3>{selected.name}</h3>
+        <div className="catering-explorer__meta">
+          <span>{selected.serves}</span>
+          <strong>{selected.price}</strong>
+        </div>
+        <p>{selected.details}</p>
+        <div className="catering-explorer__items">
+          {cateringItems.map((item) => (
+            <button
+              key={item.name}
+              type="button"
+              aria-pressed={item.name === selected.name}
+              onClick={() => setSelectedName(item.name)}
+            >
+              <span>{item.name}</span>
+              <small>{item.serves}</small>
+            </button>
+          ))}
+        </div>
+        <div className="button-row">
+          <Btn href="/catering" variant="yellow">Plan Catering</Btn>
+          <Btn href={CATERING_PDF} variant="ghost">Download Menu</Btn>
+        </div>
+      </div>
     </div>
   );
 }
@@ -291,8 +449,8 @@ export function HomePage() {
     <SiteLayout>
       <PageHero
         eyebrow="Authentic NYC bagels in Toronto"
-        title={<>Fresh New York bagels on Bathurst.</>}
-        lede="Cold-proofed, kettle-boiled, and baked fresh daily for breakfast, lunch, delivery, pickup, and catering."
+        title={<>Authentic New York Bagels in Toronto</>}
+        lede="Baked fresh daily on Bathurst. View the menu, order online, or plan catering for your next event."
         actions={<><Btn variant="yellow" href={ORDER_URL}>Order Online</Btn><Btn variant="ghost" href={DELIVERY_URL}>Order Delivery</Btn></>}
       >
         <VisualBagelCluster />
@@ -307,25 +465,26 @@ export function HomePage() {
         image={PHOTOS.ovenShot}
         alt="Fresh bagels coming out of the oven at Bubby's Bagels"
       />
-      <PreviewSection
-        eyebrow="Menu"
-        title={<>Bagels, sandwiches, wraps, pastries and coffee.</>}
-        body="Browse the bagel lineup, breakfast favourites, lox classics, wraps, salads, pastries, and drinks before you order."
-        href="/menu"
-        cta="View Full Menu"
-        reverse
-      >
-        <VisualBagelCluster />
-      </PreviewSection>
-      <PreviewSection
-        eyebrow="Catering"
-        title={<>Fresh platters for meetings, events and gatherings.</>}
-        body="Bagel platters, sandwich trays, cream cheese, smoked salmon, pastries, salads, fruit, coffee, and more."
-        href="/catering"
-        cta="Plan Catering"
-        image={PHOTOS.loxSpread}
-        alt="Catering-ready bagels and smoked salmon from Bubby's Bagels"
-      />
+      <section className="simple-section surface-tan">
+        <div className="wrap">
+          <SectionHeader
+            kicker="Featured menu"
+            title={<>Fresh Bagels, Breakfast, Lunch & Catering on Bathurst</>}
+            lede="Browse the store menu by category, then jump into the full menu when you're ready."
+          />
+          <MenuExplorer compact />
+        </div>
+      </section>
+      <section className="simple-section">
+        <div className="wrap">
+          <SectionHeader
+            kicker="Catering teaser"
+            title={<>Fresh platters for meetings, events and gatherings.</>}
+            lede="Explore the most requested catering packages and download the full menu."
+          />
+          <CateringExplorer compact />
+        </div>
+      </section>
       <section className="simple-section surface-tan">
         <div className="wrap split-grid">
           <div>
@@ -401,15 +560,7 @@ export function MenuPage() {
       <section className="simple-section surface-tan">
         <div className="wrap">
           <SectionHeader kicker="Bagels & schmears" title={<>The whole bagel lineup.</>} />
-          <div className="bagel-display-grid">
-            {BAGELS.map((bagel) => (
-              <article key={bagel.id}>
-                <Bagel variant={bagel.variant} size={150} color={bagel.color} color2={bagel.color2} />
-                <h3>{bagel.name}</h3>
-                <p>${bagel.price.toFixed(2)} each</p>
-              </article>
-            ))}
-          </div>
+          <MenuExplorer />
         </div>
       </section>
       <section className="simple-section">
@@ -447,16 +598,7 @@ export function CateringPage() {
       <section className="simple-section surface-tan">
         <div className="wrap">
           <SectionHeader kicker="Popular platters" title={<>Bagels for everyone.</>} />
-          <div className="catering-grid">
-            {cateringItems.map((item) => (
-              <article key={item.name} className="catering-card">
-                <span>{item.serves}</span>
-                <h3>{item.name}</h3>
-                <strong>{item.price}</strong>
-                <p>{item.details}</p>
-              </article>
-            ))}
-          </div>
+          <CateringExplorer />
         </div>
       </section>
       <section id="corporate-catering" className="preview-section">
