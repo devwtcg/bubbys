@@ -17,7 +17,15 @@ const EMAIL = "info@bubbysbagels.com";
 const MAP_URL = "https://maps.google.com/?q=3035+Bathurst+St,+Toronto,+ON";
 const MENU_PDF = "https://www.bubbysbagels.com/_files/ugd/88e84c_8f1815e77fdf4394bf7baa8a914976e7.pdf";
 const CATERING_PDF = "/assets/bubbys-catering-menu.pdf";
-const CATERING_SVG = "/assets/bubbys-catering-menu.svg";
+
+const minCateringDate = () => {
+  const date = new Date();
+  date.setDate(date.getDate() + 2);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
 
 const sandwichPhotos = {
   "morning-wrap": PHOTOS.shootMorningWrap,
@@ -456,11 +464,12 @@ function MenuExplorer({ compact = false }) {
 function CateringExplorer({ compact = false }) {
   const [selectedName, setSelectedName] = React.useState(cateringItems[0].name);
   const selected = cateringItems.find((item) => item.name === selectedName) || cateringItems[0];
+  const previewPhoto = compact ? PHOTOS.loxSpread : PHOTOS.shootHero;
 
   return (
     <div className={`catering-explorer ${compact ? "catering-explorer--compact" : ""}`}>
       <div className="catering-explorer__preview">
-        <img src={compact ? PHOTOS.loxSpread : CATERING_SVG} alt="Bubby's Bagels catering menu and platters" />
+        <img src={previewPhoto} alt="Bubby's Bagels catering menu and platters" />
       </div>
       <div className="catering-explorer__content">
         <Eyebrow>Popular catering</Eyebrow>
@@ -554,7 +563,16 @@ function SiteForm({ endpoint, fields, button, subject }) {
           {field.type === "textarea" ? (
             <textarea name={field.name} rows={field.rows || 5} required={field.required} />
           ) : (
-            <input name={field.name} type={field.type} required={field.required} autoComplete={field.autoComplete} />
+            <input
+              name={field.name}
+              type={field.type}
+              required={field.required}
+              autoComplete={field.autoComplete}
+              min={field.min}
+              max={field.max}
+              inputMode={field.inputMode}
+              placeholder={field.placeholder}
+            />
           )}
         </label>
       ))}
@@ -853,7 +871,7 @@ export function CateringPage() {
             <Btn variant="yellow" href="#catering-form">Plan Event Catering</Btn>
           </div>
           <div className="preview-section__visual">
-            <img src={CATERING_SVG} alt="Bubby's Bagels catering menu preview" />
+            <img src={PHOTOS.shootMorningWrap} alt="Fresh catering-ready sandwiches from Bubby's Bagels" />
           </div>
         </div>
       </section>
@@ -873,7 +891,8 @@ export function CateringPage() {
               { name: "name", label: "Name", type: "text", required: true, autoComplete: "name" },
               { name: "email", label: "Email", type: "email", required: true, autoComplete: "email" },
               { name: "phone", label: "Phone", type: "tel", autoComplete: "tel" },
-              { name: "eventDate", label: "Event date", type: "text" },
+              { name: "eventDate", label: "Event date", type: "date", min: minCateringDate(), required: true },
+              { name: "guestCount", label: "Number of guests", type: "number", min: "1", inputMode: "numeric", required: true },
               { name: "message", label: "What are you planning?", type: "textarea", full: true, required: true },
             ]}
           />
@@ -900,44 +919,48 @@ export function ContactPage() {
         note={<>Bathurst is<br />waiting.</>}
       />
       <section id="hours-location" className="simple-section surface-tan section--location-board">
-        <div className="wrap split-grid">
-          <div className="info-card">
-            <h2>Hours & location</h2>
-            <p><strong>Address</strong><span>3035 Bathurst St, Toronto, ON M6A 2A4</span></p>
-            {HOURS_DISPLAY.map(([day, hours]) => <p key={day}><strong>{day}</strong><span>{hours}</span></p>)}
-            <p><strong>Phone</strong><span>{PHONE}</span></p>
-            <p><strong>Email</strong><span>{EMAIL}</span></p>
+        <div className="wrap contact-combined-grid">
+          <div className="contact-location-stack">
+            <div className="info-card">
+              <h2>Hours & location</h2>
+              <p><strong>Address</strong><span>3035 Bathurst St, Toronto, ON M6A 2A4</span></p>
+              {HOURS_DISPLAY.map(([day, hours]) => <p key={day}><strong>{day}</strong><span>{hours}</span></p>)}
+              <p><strong>Phone</strong><span>{PHONE}</span></p>
+              <p><strong>Email</strong><span>{EMAIL}</span></p>
+            </div>
+            <div className="map-frame">
+              <iframe title="Map to Bubby's Bagels" src="https://maps.google.com/maps?q=3035+Bathurst+St,+Toronto,+ON&t=&z=16&ie=UTF8&iwloc=&output=embed" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+            </div>
           </div>
-          <div className="map-frame">
-            <iframe title="Map to Bubby's Bagels" src="https://maps.google.com/maps?q=3035+Bathurst+St,+Toronto,+ON&t=&z=16&ie=UTF8&iwloc=&output=embed" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
-          </div>
-        </div>
-      </section>
-      <BrandBandBreak
-        eyebrow="Need a hand?"
-        title={<>Call, visit, or send us the details.</>}
-        body="For current orders, call the shop. For catering, events, or general questions, send the details and the team can follow up."
-        href={TEL}
-        cta="Call Bubby's"
-      />
-      <section id="contact-form" className="simple-section">
-        <div className="wrap split-grid">
-          <div>
+          <div id="contact-form" className="contact-form-panel">
             <Eyebrow>Send a message</Eyebrow>
             <h2 className="h-section">Questions, catering, or a quick hello.</h2>
             <p>Use the form for general questions. For current orders or urgent pickup questions, call the shop.</p>
+            <SiteForm
+              endpoint="/api/contact"
+              subject="Bubby's website contact"
+              button="Send Message"
+              fields={[
+                { name: "name", label: "Name", type: "text", required: true, autoComplete: "name" },
+                { name: "email", label: "Email", type: "email", required: true, autoComplete: "email" },
+                { name: "phone", label: "Phone", type: "tel", autoComplete: "tel" },
+                { name: "message", label: "Message", type: "textarea", full: true, required: true },
+              ]}
+            />
           </div>
-          <SiteForm
-            endpoint="/api/contact"
-            subject="Bubby's website contact"
-            button="Send Message"
-            fields={[
-              { name: "name", label: "Name", type: "text", required: true, autoComplete: "name" },
-              { name: "email", label: "Email", type: "email", required: true, autoComplete: "email" },
-              { name: "phone", label: "Phone", type: "tel", autoComplete: "tel" },
-              { name: "message", label: "Message", type: "textarea", full: true, required: true },
-            ]}
-          />
+        </div>
+      </section>
+      <section className="preview-section preview-section--reverse surface-cream contact-help-section">
+        <div className="wrap preview-section__grid">
+          <div className="preview-section__copy">
+            <Eyebrow>Need a hand?</Eyebrow>
+            <h2 className="h-section">Call, visit, or send us the details.</h2>
+            <p>For current orders, call the shop. For catering, events, or general questions, send the details and the team can follow up.</p>
+            <Btn variant="yellow" href={TEL}>Call Bubby's</Btn>
+          </div>
+          <div className="preview-section__visual">
+            <img src={PHOTOS.shop2} alt="Inside Bubby's Bagels on Bathurst Street" />
+          </div>
         </div>
       </section>
     </SiteLayout>
