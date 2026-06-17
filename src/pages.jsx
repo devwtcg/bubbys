@@ -758,13 +758,18 @@ export function AboutPage() {
           </div>
         </div>
       </section>
-      <BrandBandBreak
-        eyebrow="Old-school method"
-        title={<>A proper bagel is not just bread with a hole.</>}
-        body="The chew, crust, and comfort come from the process: patient dough, boiling water, and a stone-deck finish."
-        href="/menu"
-        cta="Browse Bagels"
-      />
+      <section className="about-method-note">
+        <div className="wrap about-method-note__grid">
+          <div>
+            <Eyebrow>Old-school method</Eyebrow>
+            <h2 className="h-sub">A proper bagel is not just bread with a hole.</h2>
+          </div>
+          <div>
+            <p>The chew, crust, and comfort come from the process: patient dough, boiling water, and a stone-deck finish.</p>
+            <Btn href="/menu" variant="ghost">Browse Bagels</Btn>
+          </div>
+        </div>
+      </section>
       <section id="nyc-bagel-difference" className="simple-section surface-cream section--process">
         <div className="wrap">
           <div className="nyc-difference">
