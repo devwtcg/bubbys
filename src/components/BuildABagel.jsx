@@ -1,4 +1,4 @@
-ï»¿import React from "react";
+import React from "react";
 import { Bagel, Btn, Eyebrow, SectionHeader, Sticker } from "./atoms.jsx";
 import { BubbySays } from "./fun.jsx";
 import { BAGELS, SCHMEARS } from "../data/menu.js";
@@ -46,9 +46,9 @@ function BagelTile({ b, selected, onClick, onAdd }) {
       <Bagel variant={b.variant} size={92} color={b.color} color2={b.color2} />
       <div style={{ textAlign: "center" }}>
         <div style={{ fontFamily: "var(--display)", fontSize: 22, lineHeight: 1 }}>{b.name}</div>
-        <div style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".1em", marginTop: 4 }}>
+        <div style={{ fontFamily: "var(--mono)", fontSize: 16, letterSpacing: ".1em", marginTop: 4 }}>
           ${b.price.toFixed(2)}
-          {b.note && <span style={{ marginLeft: 8, opacity: .55, textTransform: "uppercase" }}>Â· {b.note}</span>}
+          {b.note && <span style={{ marginLeft: 8, opacity: .55, textTransform: "uppercase" }}>· {b.note}</span>}
         </div>
       </div>
       {selected && (
@@ -105,13 +105,13 @@ function SchmearPot({ s, selected, onClick }) {
           height: 14, background: s.color,
           border: "2.5px solid var(--ink)", borderRadius: 6,
         }} />
-        <div style={{ position:"absolute", top: -22, left: "50%", transform: "translateX(-50%) rotate(-3deg)", fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".06em", background: "var(--paper)", padding: "2px 6px", border: "2px solid var(--ink)", whiteSpace: "nowrap" }}>
+        <div style={{ position:"absolute", top: -22, left: "50%", transform: "translateX(-50%) rotate(-3deg)", fontFamily: "var(--mono)", fontSize: 16, letterSpacing: ".06em", background: "var(--paper)", padding: "2px 6px", border: "2px solid var(--ink)", whiteSpace: "nowrap" }}>
           BUBBY'S
         </div>
       </div>
       <div style={{ textAlign: "center" }}>
-        <div style={{ fontFamily: "var(--body)", fontWeight: 700, fontSize: 14, textTransform: "uppercase", letterSpacing: ".06em" }}>{s.name}</div>
-        <div style={{ fontFamily: "var(--mono)", fontSize: 14, marginTop: 2 }}>${s.price.toFixed(2)}</div>
+        <div style={{ fontFamily: "var(--body)", fontWeight: 700, fontSize: 16, textTransform: "uppercase", letterSpacing: ".06em" }}>{s.name}</div>
+        <div style={{ fontFamily: "var(--mono)", fontSize: 16, marginTop: 2 }}>${s.price.toFixed(2)}</div>
       </div>
     </button>
   );
@@ -136,13 +136,13 @@ export function BuildABagel({ onAddCombo, onOrderCombo }) {
       <div className="wrap">
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 32, flexWrap: "wrap", marginBottom: 60 }}>
           <SectionHeader
-            num="NÂ° 03"
+            num="N° 03"
             kicker="Pick. Schmear. Eat."
             title={<>Build your<br/>perfect bagel.</>}
           />
           <BubbySays color="var(--orange)" tilt={-3} tail="br" style={{ maxWidth: 280 }}>
             "Take two, they're small!"<br/>
-            <span style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".14em", textTransform: "uppercase", display: "inline-block", marginTop: 8, color: "var(--paper)" }}>â€” Bubby, every time</span>
+            <span style={{ fontFamily: "var(--mono)", fontSize: 16, letterSpacing: ".14em", textTransform: "uppercase", display: "inline-block", marginTop: 8, color: "var(--paper)" }}>— Bubby, every time</span>
           </BubbySays>
         </div>
 
@@ -165,7 +165,7 @@ export function BuildABagel({ onAddCombo, onOrderCombo }) {
           }}>
             <div style={{
               position: "absolute", top: 20, left: 20,
-              fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".18em", textTransform: "uppercase",
+              fontFamily: "var(--mono)", fontSize: 16, letterSpacing: ".18em", textTransform: "uppercase",
             }}>LIVE PREVIEW</div>
             <Sticker color="var(--mustard)" tilt={5} style={{ position: "absolute", top: 20, right: 20 }}>
               READY IN 6 MIN
@@ -192,8 +192,8 @@ export function BuildABagel({ onAddCombo, onOrderCombo }) {
               <div style={{ fontFamily: "var(--display)", fontSize: 36, lineHeight: 1 }}>
                 {bagel.name} + {schmear.name}
               </div>
-              <div style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".14em", marginTop: 8, textTransform: "uppercase" }}>
-                ${total.toFixed(2)} Â· made-to-order
+              <div style={{ fontFamily: "var(--mono)", fontSize: 16, letterSpacing: ".14em", marginTop: 8, textTransform: "uppercase" }}>
+                ${total.toFixed(2)} · made-to-order
               </div>
             </div>
 
@@ -201,11 +201,11 @@ export function BuildABagel({ onAddCombo, onOrderCombo }) {
               <Btn variant="dark" icon="+" onClick={() => onAddCombo(bagel, schmear)}>
                 Add to ticket
               </Btn>
-              <Btn variant="yellow" icon="â†’" onClick={() => onOrderCombo(bagel, schmear)}>
+              <Btn variant="yellow" icon="?" onClick={() => onOrderCombo(bagel, schmear)}>
                 Order online
               </Btn>
             </div>
-            <p style={{ margin: 0, maxWidth: 420, textAlign: "center", fontSize: 14, lineHeight: 1.35 }}>
+            <p style={{ margin: 0, maxWidth: 420, textAlign: "center", fontSize: 16, lineHeight: 1.35 }}>
               Your selection is saved to this ticket before Clover opens.
             </p>
           </div>
@@ -214,7 +214,7 @@ export function BuildABagel({ onAddCombo, onOrderCombo }) {
             <div>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 12 }}>
                 <Eyebrow num="01">Pick your bagel</Eyebrow>
-                <span style={{ fontFamily: "var(--mono)", fontSize: 14, opacity: .6 }}>18 to choose from</span>
+                <span style={{ fontFamily: "var(--mono)", fontSize: 16, opacity: .6 }}>18 to choose from</span>
               </div>
               <div style={{
                 display: "grid",
@@ -242,19 +242,19 @@ export function BuildABagel({ onAddCombo, onOrderCombo }) {
                     }}
                   >
                     <Bagel variant={b.variant} size={48} color={b.color} color2={b.color2} />
-                    <span style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".06em" }}>{b.name}</span>
+                    <span style={{ fontFamily: "var(--mono)", fontSize: 16, letterSpacing: ".06em" }}>{b.name}</span>
                   </button>
                 ))}
               </div>
-              <div style={{ fontFamily: "var(--mono)", fontSize: 14, marginTop: 8, opacity: .6, textTransform: "uppercase", letterSpacing: ".1em" }}>
-                + 6 more below Â· Half dozen $11 Â· Dozen $20
+              <div style={{ fontFamily: "var(--mono)", fontSize: 16, marginTop: 8, opacity: .6, textTransform: "uppercase", letterSpacing: ".1em" }}>
+                + 6 more below · Half dozen $11 · Dozen $20
               </div>
             </div>
 
             <div>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 12 }}>
                 <Eyebrow num="02">Pick your schmear</Eyebrow>
-                <span style={{ fontFamily: "var(--mono)", fontSize: 14, opacity: .6 }}>house made</span>
+                <span style={{ fontFamily: "var(--mono)", fontSize: 16, opacity: .6 }}>house made</span>
               </div>
               <div style={{
                 display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(4, 1fr)",
@@ -275,15 +275,15 @@ export function BuildABagel({ onAddCombo, onOrderCombo }) {
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 28, gap: 24, flexWrap: "wrap" }}>
             <h3 className="h-sub">The whole<br/>bagel lineup.</h3>
             <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 8 }}>
-              <div style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".18em", textTransform: "uppercase", opacity: .7 }}>
-                Single bagel $1.80 Â· Half dozen $11 Â· Dozen $20
+              <div style={{ fontFamily: "var(--mono)", fontSize: 16, letterSpacing: ".18em", textTransform: "uppercase", opacity: .7 }}>
+                Single bagel $1.80 · Half dozen $11 · Dozen $20
               </div>
               <a
                 href="https://www.bubbysbagels.com/_files/ugd/88e84c_8f1815e77fdf4394bf7baa8a914976e7.pdf"
                 target="_blank"
                 rel="noopener"
                 style={{
-                  fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".18em",
+                  fontFamily: "var(--mono)", fontSize: 16, letterSpacing: ".18em",
                   textTransform: "uppercase", color: "var(--ink)",
                   textDecoration: "none",
                   padding: "6px 12px",
@@ -291,7 +291,7 @@ export function BuildABagel({ onAddCombo, onOrderCombo }) {
                   background: "var(--schmear)",
                 }}
               >
-                Full bagel menu (PDF) â†’
+                Full bagel menu (PDF) ?
               </a>
             </div>
           </div>

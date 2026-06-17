@@ -1,11 +1,13 @@
 import React from "react";
 import { AwardsTicker } from "./components/AwardsTicker.jsx";
-import { Bagel, Btn, Eyebrow, SectionHeader, Sticker } from "./components/atoms.jsx";
+import { Bagel, Btn, Eyebrow, SectionHeader, StarBurst, Sticker } from "./components/atoms.jsx";
+import { BubbySays, Squiggle } from "./components/fun.jsx";
 import { Footer as LandingFooter } from "./components/Locations.jsx";
 import { TopBar } from "./components/TopBar.jsx";
 import { BRAND, BRAND_ASSETS } from "./brand.js";
-import { BAGELS, SANDWICHES } from "./data/menu.js";
+import { BAGELS, DRINKS, PASTRIES, SANDWICHES } from "./data/menu.js";
 import { HOURS_DISPLAY } from "./data/hours.js";
+import { useStoreOpen } from "./hooks/useStoreOpen.js";
 import { PHOTOS } from "./data/photos.js";
 import { DELIVERY_URL, ORDER_URL } from "./order.js";
 
@@ -16,6 +18,24 @@ const MAP_URL = "https://maps.google.com/?q=3035+Bathurst+St,+Toronto,+ON";
 const MENU_PDF = "https://www.bubbysbagels.com/_files/ugd/88e84c_8f1815e77fdf4394bf7baa8a914976e7.pdf";
 const CATERING_PDF = "/assets/bubbys-catering-menu.pdf";
 const CATERING_SVG = "/assets/bubbys-catering-menu.svg";
+
+const sandwichPhotos = {
+  "morning-wrap": PHOTOS.shootMorningWrap,
+  "breakfast-sandwich": PHOTOS.shootBreakfast,
+  "de-lox-club": PHOTOS.shootDeluxeClub,
+  novacado: PHOTOS.shootAvocado,
+  tunisian: PHOTOS.shootTunisian,
+  "pizza-bagel": PHOTOS.shootPizza,
+  "tuna-sandwich": PHOTOS.shootTuna,
+  "lox-cream-cheese": PHOTOS.shootLox,
+};
+
+const menuCategoryPhotos = {
+  bagels: PHOTOS.shootHero,
+  sandwiches: PHOTOS.shootBreakfast,
+  drinks: PHOTOS.shootCoffee,
+  pastries: PHOTOS.shootPastry,
+};
 
 export const META = {
   "/": {
@@ -118,16 +138,30 @@ const menuCategories = [
     })),
   },
   {
-    id: "bakery",
-    label: "Pastries & Drinks",
-    title: "Pastries, drinks, coffee and deli favourites.",
-    lede: "Round out the order with bakery items, salads, drinks, and coffee. Availability can vary by day.",
-    items: [
-      { id: "coffee", name: "Coffee", detail: "Fresh coffee for breakfast, meetings, and catering add-ons.", price: "See menu" },
-      { id: "pastries", name: "Pastries", detail: "Bakery favourites for the counter, meetings, and brunch spreads.", price: "See menu" },
-      { id: "salads", name: "Salads & Pastas", detail: "Prepared sides for lunch orders and catering spreads.", price: "See menu" },
-      { id: "drinks", name: "Cold Drinks", detail: "Bottled drinks and grab-and-go options.", price: "See menu" },
-    ],
+    id: "drinks",
+    label: "Drinks",
+    title: "Coffee and cold drinks.",
+    lede: "Espresso, hot coffee classics, iced coffee, and cold mochachino from the Bathurst menu.",
+    items: DRINKS.map((item) => ({
+      id: item.id,
+      name: item.name,
+      detail: item.desc,
+      price: `$${item.price.toFixed(2)}`,
+      item,
+    })),
+  },
+  {
+    id: "pastries",
+    label: "Pastries",
+    title: "Pastries for breakfast, brunch and coffee runs.",
+    lede: "Breakfast pastries from the store menu, ready to round out a coffee order or morning spread.",
+    items: PASTRIES.map((item) => ({
+      id: item.id,
+      name: item.name,
+      detail: item.desc,
+      price: `$${item.price.toFixed(2)}`,
+      item,
+    })),
   },
 ];
 
@@ -139,18 +173,81 @@ function ExternalLink({ href, children, className = "text-link" }) {
   );
 }
 
-function PageHero({ eyebrow, title, lede, image, alt, actions, children }) {
+function LiveStoreBadge() {
+  const { store } = useStoreOpen();
   return (
-    <section className="page-hero">
+    <span
+      className={`live-store-badge ${store.open ? "live-store-badge--open" : "live-store-badge--closed"}`}
+      title={store.open && store.until ? `Open until ${store.until} ET` : undefined}
+    >
+      <span className="live-store-badge__dot" aria-hidden="true" />
+      <span>{store.label}</span>
+      {store.open && store.until && <small>til {store.until}</small>}
+    </span>
+  );
+}
+
+function HeroMedal({ children }) {
+  return (
+    <div className="page-hero__medal" aria-hidden="true">
+      <StarBurst size={136} color="var(--mustard)" />
+      <span>{children}</span>
+    </div>
+  );
+}
+
+function PageHero({
+  eyebrow,
+  title,
+  lede,
+  image,
+  alt,
+  actions,
+  children,
+  variant = "default",
+  showBadge = false,
+  showLive = false,
+  underline = false,
+  note,
+  medal,
+}) {
+  const isInnerHero = variant !== "home";
+  return (
+    <section className={`page-hero page-hero--${variant} ${isInnerHero ? "page-hero--inner" : ""}`}>
+      {isInnerHero && (
+        <div className="page-hero__bagel-scatter" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+          <span />
+        </div>
+      )}
+      {showBadge && (
+        <img
+          className="brand-logo brand-logo--badge page-hero__badge-logo"
+          src={BRAND_ASSETS.badge}
+          alt={BRAND.name}
+        />
+      )}
       <div className="wrap page-hero__grid">
         <div className="page-hero__copy">
-          {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
+          <div className="page-hero__eyebrow-row">
+            {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
+            {showLive && <LiveStoreBadge />}
+          </div>
           <h1 className="h-display">{title}</h1>
+          {underline && <Squiggle width={360} height={16} color="var(--orange-deep)" style={{ marginTop: 14, maxWidth: "100%" }} />}
           {lede && <p className="page-hero__lede">{lede}</p>}
           {actions && <div className="button-row">{actions}</div>}
         </div>
         <div className="page-hero__media">
           {image ? <img src={image} alt={alt} /> : children}
+          {note && (
+            <div className="page-hero__note">
+              <BubbySays color="var(--mustard)" tilt={-4} tail="br">{note}</BubbySays>
+            </div>
+          )}
+          {medal && <HeroMedal>{medal}</HeroMedal>}
         </div>
       </div>
     </section>
@@ -174,6 +271,23 @@ function VisualBagelCluster() {
   );
 }
 
+function FoodPhotoCluster() {
+  const photos = [
+    [PHOTOS.shootHero, "Fresh Bubby's bagels"],
+    [PHOTOS.shootLox, "Lox and cream cheese bagel"],
+    [PHOTOS.shootBreakfast, "Breakfast sandwich"],
+    [PHOTOS.shootAvocado, "Avocado bagel"],
+  ];
+
+  return (
+    <div className="food-photo-cluster">
+      {photos.map(([src, alt], index) => (
+        <img key={src} src={src} alt={alt} className={`food-photo-cluster__image food-photo-cluster__image--${index + 1}`} />
+      ))}
+    </div>
+  );
+}
+
 function PreviewSection({ eyebrow, title, body, href, cta, image, alt, reverse = false, children }) {
   return (
     <section className={`preview-section ${reverse ? "preview-section--reverse" : ""}`}>
@@ -186,6 +300,23 @@ function PreviewSection({ eyebrow, title, body, href, cta, image, alt, reverse =
         </div>
         <div className="preview-section__visual">
           {image ? <img src={image} alt={alt} /> : children}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function BrandBandBreak({ eyebrow, title, body, href, cta }) {
+  return (
+    <section className="brand-break">
+      <div className="wrap brand-break__grid">
+        <div>
+          <Eyebrow>{eyebrow}</Eyebrow>
+          <h2 className="h-sub">{title}</h2>
+        </div>
+        <div>
+          <p>{body}</p>
+          {href && cta && <Btn variant="ghost" href={href}>{cta}</Btn>}
         </div>
       </div>
     </section>
@@ -209,6 +340,43 @@ function MenuPreviewGrid({ limit = 6 }) {
   );
 }
 
+function MenuCategorySection({ category, index }) {
+  const isBagelCategory = category.id === "bagels";
+  return (
+    <section
+      id={`menu-${category.id}`}
+      className={`simple-section menu-category-section ${index % 2 ? "surface-cream" : "section--counter-classics"}`}
+    >
+      <div className="wrap">
+        <SectionHeader
+          kicker={category.label}
+          title={category.title}
+          lede={category.lede}
+        />
+        <div className={`menu-category-grid ${isBagelCategory ? "menu-category-grid--dense" : ""}`}>
+          {category.items.map((item) => (
+            <article key={item.id} className="menu-category-card">
+              {(sandwichPhotos[item.id] || (!item.bagel && menuCategoryPhotos[category.id])) && (
+                <img
+                  className="menu-category-card__image"
+                  src={sandwichPhotos[item.id] || menuCategoryPhotos[category.id]}
+                  alt={`${item.name} at Bubby's Bagels`}
+                  loading="lazy"
+                />
+              )}
+              <div>
+                <span>{item.price}</span>
+                <h3>{item.name}</h3>
+                <p>{item.detail}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function MenuExplorer({ compact = false }) {
   const [categoryId, setCategoryId] = React.useState("bagels");
   const [selectedId, setSelectedId] = React.useState("everything");
@@ -219,7 +387,7 @@ function MenuExplorer({ compact = false }) {
     setSelectedId(category.items[0]?.id);
   }, [categoryId]);
 
-  const selectedBagel = selected?.bagel || BAGELS.find((bagel) => bagel.id === "everything") || BAGELS[0];
+  const visualPhoto = sandwichPhotos[selected?.id] || menuCategoryPhotos[category.id] || PHOTOS.shootHero;
 
   return (
     <div className={`menu-explorer ${compact ? "menu-explorer--compact" : ""}`}>
@@ -230,7 +398,14 @@ function MenuExplorer({ compact = false }) {
             type="button"
             role="tab"
             aria-selected={item.id === categoryId}
-            onClick={() => setCategoryId(item.id)}
+            onClick={(event) => {
+              setCategoryId(item.id);
+              event.currentTarget.scrollIntoView({
+                behavior: "smooth",
+                block: "nearest",
+                inline: "start",
+              });
+            }}
           >
             {item.label}
           </button>
@@ -239,19 +414,10 @@ function MenuExplorer({ compact = false }) {
 
       <div className="menu-explorer__body">
         <div className="menu-explorer__visual">
-          {category.id === "bagels" ? (
-            <Bagel
-              variant={selectedBagel.variant}
-              size={compact ? 210 : 270}
-              color={selectedBagel.color}
-              color2={selectedBagel.color2}
-            />
-          ) : (
-            <img
-              src={category.id === "sandwiches" ? PHOTOS.sandwich1 : PHOTOS.display}
-              alt={`${category.label} from Bubby's Bagels`}
-            />
-          )}
+          <img
+            src={visualPhoto}
+            alt={`${selected?.name || category.label} from Bubby's Bagels`}
+          />
           <Sticker color="var(--mustard)" tilt={-5}>{category.label}</Sticker>
         </div>
 
@@ -328,7 +494,7 @@ function CateringExplorer({ compact = false }) {
 
 function NewsletterBlock() {
   return (
-    <section className="newsletter-band">
+    <section className="brand-break newsletter-band">
       <div className="wrap newsletter-band__grid">
         <div>
           <Eyebrow>Fresh from the oven</Eyebrow>
@@ -452,8 +618,14 @@ export function HomePage() {
         title={<>Authentic New York Bagels in Toronto</>}
         lede="Baked fresh daily on Bathurst. View the menu, order online, or plan catering for your next event."
         actions={<><Btn variant="yellow" href={ORDER_URL}>Order Online</Btn><Btn variant="ghost" href={DELIVERY_URL}>Order Delivery</Btn></>}
+        variant="home"
+        showBadge
+        showLive
+        underline
+        note={<>Eat! You're<br />skin and bones!</>}
+        medal={<>36 hr<br />proof</>}
       >
-        <VisualBagelCluster />
+        <FoodPhotoCluster />
       </PageHero>
       <AwardsTicker />
       <PreviewSection
@@ -465,7 +637,14 @@ export function HomePage() {
         image={PHOTOS.ovenShot}
         alt="Fresh bagels coming out of the oven at Bubby's Bagels"
       />
-      <section className="simple-section surface-tan">
+      <BrandBandBreak
+        eyebrow="The difference"
+        title={<>Boiled, baked, and built for the schmear.</>}
+        body="Cold-proofed dough, a proper boil, and a hot oven give Bubby's bagels their shiny crust, dense chew, and fresh-baked pull."
+        href="/about#nyc-bagel-difference"
+        cta="See the Process"
+      />
+      <section id="featured-menu" className="simple-section surface-tan section--menu-board">
         <div className="wrap">
           <SectionHeader
             kicker="Featured menu"
@@ -475,7 +654,7 @@ export function HomePage() {
           <MenuExplorer compact />
         </div>
       </section>
-      <section className="simple-section">
+      <section id="catering-preview" className="simple-section section--catering-sheet">
         <div className="wrap">
           <SectionHeader
             kicker="Catering teaser"
@@ -485,7 +664,7 @@ export function HomePage() {
           <CateringExplorer compact />
         </div>
       </section>
-      <section className="simple-section surface-tan">
+      <section id="visit" className="simple-section surface-tan section--location-board">
         <div className="wrap split-grid">
           <div>
             <Eyebrow>Visit us</Eyebrow>
@@ -513,17 +692,38 @@ export function AboutPage() {
         lede="An authentic New York bagel shop in Toronto, serving fresh bagels, breakfast, lunch, and catering from Bathurst Street."
         image={PHOTOS.shop2}
         alt="Bubby's Bagels shop in Toronto"
+        variant="about"
+        underline
+        note={<>Real bagels.<br />Real Bathurst.</>}
       />
-      <PreviewSection
-        eyebrow="Our story"
-        title={<>Built to bring real NYC bagels to Toronto.</>}
-        body="The promise is simple: fresh daily bagels made with the texture, chew, and comfort people expect from a real New York bagel shop."
+      <section id="our-story" className="about-story-band">
+        <div className="wrap about-story-band__grid">
+          <div className="about-story-band__photo-stack">
+            <figure className="story-polaroid story-polaroid--front">
+              <img src={PHOTOS.bagelHand} alt="Hand-rolled bagels at Bubby's Bagels" />
+              <figcaption>Hand rolled daily</figcaption>
+            </figure>
+            <figure className="story-polaroid story-polaroid--back">
+              <img src={PHOTOS.ovenShot} alt="Fresh bagels at the oven" />
+              <figcaption>Stone-deck baked</figcaption>
+            </figure>
+          </div>
+          <div>
+            <Eyebrow>Our story</Eyebrow>
+            <h2 className="h-section">Built to bring real NYC bagels to Toronto.</h2>
+            <p>The promise is simple: fresh daily bagels made with the texture, chew, and comfort people expect from a real New York bagel shop.</p>
+            <div className="button-row"><Btn href="/menu" variant="yellow">Read Our Menu</Btn><Btn href="/contact" variant="ghost">Visit Bathurst</Btn></div>
+          </div>
+        </div>
+      </section>
+      <BrandBandBreak
+        eyebrow="Old-school method"
+        title={<>A proper bagel is not just bread with a hole.</>}
+        body="The chew, crust, and comfort come from the process: patient dough, boiling water, and a stone-deck finish."
         href="/menu"
-        cta="Read Our Menu"
-        image={PHOTOS.bagelHand}
-        alt="Hand-rolled bagels at Bubby's Bagels"
+        cta="Browse Bagels"
       />
-      <section id="nyc-bagel-difference" className="simple-section surface-cream">
+      <section id="nyc-bagel-difference" className="simple-section surface-cream section--process">
         <div className="wrap">
           <SectionHeader
             kicker="The NYC bagel difference"
@@ -554,19 +754,38 @@ export function MenuPage() {
         title="Bubby's Bagels Menu"
         lede="Fresh bagels, spreads, sandwiches, wraps, breakfast, lunch, pastries, drinks, and more."
         actions={<><Btn variant="yellow" href={ORDER_URL}>Order Online</Btn><Btn variant="ghost" href={MENU_PDF}>Download Menu PDF</Btn></>}
+        variant="menu"
+        showLive
+        underline
+        note={<>Pick your<br />schmear.</>}
+        medal={<>fresh<br />daily</>}
       >
-        <VisualBagelCluster />
+        <FoodPhotoCluster />
       </PageHero>
-      <section className="simple-section surface-tan">
+      <section className="simple-section surface-tan section--menu-board">
         <div className="wrap">
           <SectionHeader kicker="Bagels & schmears" title={<>The whole bagel lineup.</>} />
           <MenuExplorer />
         </div>
       </section>
-      <section className="simple-section">
+      <BrandBandBreak
+        eyebrow="Full menu"
+        title={<>Browse every category before you order.</>}
+        body="Bagels, spreads, breakfast, lunch, drinks, and pastries are laid out below as regular menu sections."
+        href={ORDER_URL}
+        cta="Order Online"
+      />
+      {menuCategories.map((category, index) => (
+        <MenuCategorySection key={category.id} category={category} index={index} />
+      ))}
+      <section className="simple-section surface-tan section--menu-cta">
         <div className="wrap">
-          <SectionHeader kicker="Breakfast & lunch" title={<>Six legends. One stone oven.</>} lede="Signature classics from the store menu, ready for pickup or delivery through our ordering partners." />
-          <MenuPreviewGrid />
+          <SectionHeader
+            kicker="Ready to eat?"
+            title={<>Order pickup or delivery.</>}
+            lede="Use Clover for online pickup ordering or Uber Eats for delivery."
+            align="center"
+          />
           <div className="center-actions"><Btn href={ORDER_URL} variant="yellow">Order Online</Btn><Btn href={DELIVERY_URL} variant="ghost">Order Delivery</Btn></div>
         </div>
       </section>
@@ -594,14 +813,25 @@ export function CateringPage() {
         actions={<><Btn variant="yellow" href="#catering-form">Start a Catering Order</Btn><Btn variant="ghost" href={CATERING_PDF}>Download Catering Menu</Btn></>}
         image={PHOTOS.loxSpread}
         alt="Bubby's Bagels catering platter in Toronto"
+        variant="catering"
+        underline
+        note={<>Feed the whole<br />mishpacha.</>}
+        medal={<>serves<br />groups</>}
       />
-      <section className="simple-section surface-tan">
+      <section id="popular-platters" className="simple-section surface-tan section--catering-sheet">
         <div className="wrap">
           <SectionHeader kicker="Popular platters" title={<>Bagels for everyone.</>} />
           <CateringExplorer />
         </div>
       </section>
-      <section id="corporate-catering" className="preview-section">
+      <BrandBandBreak
+        eyebrow="Catering rhythm"
+        title={<>Platters, trays, coffee, and a sane morning.</>}
+        body="Build a generous spread for the office, a family brunch, a school event, or the kind of meeting that needs better food."
+        href="#catering-form"
+        cta="Start Inquiry"
+      />
+      <section id="corporate-catering" className="preview-section section--corporate">
         <div className="wrap preview-section__grid">
           <div className="preview-section__copy">
             <Eyebrow>Corporate catering</Eyebrow>
@@ -664,8 +894,12 @@ export function ContactPage() {
         actions={<><Btn variant="yellow" href={TEL}>Call Now</Btn><Btn variant="ghost" href={MAP_URL}>Get Directions</Btn></>}
         image={PHOTOS.shop1}
         alt="Bubby's Bagels storefront on Bathurst Street in Toronto"
+        variant="contact"
+        showLive
+        underline
+        note={<>Bathurst is<br />waiting.</>}
       />
-      <section id="hours-location" className="simple-section surface-tan">
+      <section id="hours-location" className="simple-section surface-tan section--location-board">
         <div className="wrap split-grid">
           <div className="info-card">
             <h2>Hours & location</h2>
@@ -679,7 +913,14 @@ export function ContactPage() {
           </div>
         </div>
       </section>
-      <section className="simple-section">
+      <BrandBandBreak
+        eyebrow="Need a hand?"
+        title={<>Call, visit, or send us the details.</>}
+        body="For current orders, call the shop. For catering, events, or general questions, send the details and the team can follow up."
+        href={TEL}
+        cta="Call Bubby's"
+      />
+      <section id="contact-form" className="simple-section">
         <div className="wrap split-grid">
           <div>
             <Eyebrow>Send a message</Eyebrow>
@@ -742,6 +983,9 @@ export function BlogStubPage({ kind = "blog" }) {
         actions={<><Btn variant="yellow" href="/menu">View Menu</Btn><Btn variant="ghost" href="/catering">Order Catering</Btn></>}
         image={PHOTOS.bagelTray}
         alt="Fresh bagels at Bubby's Bagels"
+        variant="blog"
+        underline
+        note={<>Fresh notes<br />coming soon.</>}
       />
     </SiteLayout>
   );

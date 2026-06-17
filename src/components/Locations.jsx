@@ -1,4 +1,4 @@
-ï»¿import React from "react";
+import React from "react";
 import { Btn, SectionHeader, Sticker } from "./atoms.jsx";
 import { HOURS_DISPLAY } from "../data/hours.js";
 import { useIsMobile } from "../hooks/useIsMobile.js";
@@ -36,7 +36,7 @@ function LatestNewsForm() {
       style={{ maxWidth: 620 }}
     >
       <p hidden><label>Do not fill this out: <input name="website" /></label></p>
-      <div style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--ink)", marginBottom: 10 }}>
+      <div style={{ fontFamily: "var(--mono)", fontSize: 16, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--ink)", marginBottom: 10 }}>
         Get the latest news
       </div>
       <div className="latest-news-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr auto", gap: 8 }}>
@@ -52,8 +52,8 @@ function LatestNewsForm() {
           {status === "submitting" ? "Joining..." : "Join"}
         </button>
       </div>
-      {status === "success" && <p role="status" style={{ margin: "10px 0 0", fontSize: 14 }}>You're on the list.</p>}
-      {status === "error" && <p role="alert" style={{ margin: "10px 0 0", fontSize: 14 }}>Something went wrong. Please try again.</p>}
+      {status === "success" && <p role="status" style={{ margin: "10px 0 0", fontSize: 16 }}>You're on the list.</p>}
+      {status === "error" && <p role="alert" style={{ margin: "10px 0 0", fontSize: 16 }}>Something went wrong. Please try again.</p>}
     </form>
   );
 }
@@ -79,11 +79,11 @@ export function Locations() {
       <div className="wrap">
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 60, flexWrap: "wrap", gap: 24 }}>
           <SectionHeader
-            num="NÂ° 07"
-            kicker="Two spots, one street Â· COR certified"
+            num="N° 07"
+            kicker="Two spots, one street · COR certified"
             title={<>Come visit<br/>the family.</>}
           />
-          <div style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".18em", textTransform: "uppercase", maxWidth: 320, textAlign: "right" }}>
+          <div style={{ fontFamily: "var(--mono)", fontSize: 16, letterSpacing: ".18em", textTransform: "uppercase", maxWidth: 320, textAlign: "right" }}>
             We've been on Bathurst since 2011. Park, walk in, smell the oven. That's the whole experience.
           </div>
         </div>
@@ -137,8 +137,8 @@ export function Locations() {
                 gap: 20,
               }}>
                 <div>
-                  <div style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--lox-deep)" }}>HOURS</div>
-                  <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 6, fontFamily: "var(--mono)", fontSize: 14, lineHeight: 1 }}>
+                  <div style={{ fontFamily: "var(--mono)", fontSize: 16, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--lox-deep)" }}>HOURS</div>
+                  <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 6, fontFamily: "var(--mono)", fontSize: 16, lineHeight: 1 }}>
                     {s.hours.map(([d, h]) => (
                       <div key={d} style={{ display: "flex", justifyContent: "space-between", borderBottom: "1.5px dotted rgba(26,22,18,.4)", paddingBottom: 5 }}>
                         <span>{d}</span><span>{h}</span>
@@ -147,14 +147,14 @@ export function Locations() {
                   </div>
                 </div>
                 <div>
-                  <div style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--lox-deep)" }}>CALL</div>
+                  <div style={{ fontFamily: "var(--mono)", fontSize: 16, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--lox-deep)" }}>CALL</div>
                   <a href={`tel:${s.phone.replace(/\D/g, "")}`} style={{
                     display: "block", marginTop: 8,
                     fontFamily: "var(--display)", fontSize: 28, lineHeight: 1,
                     textDecoration: "none", color: "var(--ink)",
                   }}>{s.phone}</a>
                   <div style={{ marginTop: 18, display: "flex", flexDirection: "column", gap: 8 }}>
-                    <Btn variant="yellow" href={s.dirHref} icon="â†—">Get directions</Btn>
+                    <Btn variant="yellow" href={s.dirHref} icon="?">Get directions</Btn>
                   </div>
                 </div>
               </div>
@@ -202,7 +202,7 @@ export function Footer() {
             </p>
             <div style={{ marginTop: 24, display: "flex", gap: 12, flexWrap: "wrap" }}>
               <a href={UBER_EATS_URL} target="_blank" rel="noopener" style={{
-                  fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".18em",
+                  fontFamily: "var(--mono)", fontSize: 16, letterSpacing: ".18em",
                   textTransform: "uppercase", padding: "8px 14px",
                   border: "2px solid var(--paper)", borderRadius: 999,
                   color: "var(--paper)", textDecoration: "none",
@@ -230,8 +230,8 @@ export function Footer() {
                 <div style={{ fontFamily: "var(--display)", fontSize: 22, lineHeight: 1, color: "var(--orange-deep)" }}>
                   Strictly Kosher
                 </div>
-                <div style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".14em", textTransform: "uppercase", marginTop: 4 }}>
-                  Dairy & fish Â· COR certified
+                <div style={{ fontFamily: "var(--mono)", fontSize: 16, letterSpacing: ".14em", textTransform: "uppercase", marginTop: 4 }}>
+                  Dairy & fish · COR certified
                 </div>
               </div>
             </div>
@@ -258,7 +258,7 @@ export function Footer() {
             ]],
           ].map(([t, items]) => (
             <div key={t}>
-              <div style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".22em", textTransform: "uppercase", color: "var(--mustard)" }}>{t}</div>
+              <div style={{ fontFamily: "var(--mono)", fontSize: 16, letterSpacing: ".22em", textTransform: "uppercase", color: "var(--mustard)" }}>{t}</div>
               <ul style={{ listStyle: "none", padding: 0, margin: "16px 0 0", display: "flex", flexDirection: "column", gap: 8 }}>
                 {items.map(([label, href]) => (
                   <li key={label}>
@@ -280,11 +280,11 @@ export function Footer() {
           paddingTop: 24,
           borderTop: "2px dashed rgba(244,234,213,.3)",
           display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 16,
-          fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".14em", textTransform: "uppercase", color: "rgba(244,234,213,.7)",
+          fontFamily: "var(--mono)", fontSize: 16, letterSpacing: ".14em", textTransform: "uppercase", color: "rgba(244,234,213,.7)",
         }}>
-          <div>Â© 2026 Bubby's Bagels Â· Bathurst Street, Toronto</div>
+          <div>© 2026 Bubby's Bagels · Bathurst Street, Toronto</div>
           <div>
-            Website baked with <span style={{ color: "var(--orange)" }}>â™¥</span> by{" "}
+            Website baked with <span style={{ color: "var(--orange)" }}>?</span> by{" "}
             <a
               href="https://talkerstein.com"
               target="_blank"

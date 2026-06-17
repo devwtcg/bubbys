@@ -51,7 +51,7 @@ export function CartDrawer({ open, items, onClose, onIncrement, onDecrement }) {
           background: "var(--mustard)",
         }}>
           <div>
-            <div style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".22em", textTransform: "uppercase" }}>Your ticket</div>
+            <div style={{ fontFamily: "var(--mono)", fontSize: 16, letterSpacing: ".22em", textTransform: "uppercase" }}>Your ticket</div>
             <div id="ticket-title" style={{ fontFamily: "var(--display)", fontSize: 32, lineHeight: 1, marginTop: 2 }}>
               The Order
             </div>
@@ -72,7 +72,7 @@ export function CartDrawer({ open, items, onClose, onIncrement, onDecrement }) {
                 <Bagel variant="plain" size={80} color="#d4a55a" color2="#a06c2c" />
               </div>
               Your ticket is empty.<br/>
-              <span style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".14em", textTransform: "uppercase" }}>Pick a bagel to begin</span>
+              <span style={{ fontFamily: "var(--mono)", fontSize: 16, letterSpacing: ".14em", textTransform: "uppercase" }}>Pick a bagel to begin</span>
             </div>
           ) : (
             <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 14 }}>
@@ -93,12 +93,12 @@ export function CartDrawer({ open, items, onClose, onIncrement, onDecrement }) {
                     <div style={{ width: 44, height: 44, borderRadius: 8, background: "var(--mustard)", border: "2px solid var(--ink)" }} />
                   )}
                   <div>
-                    <div style={{ fontFamily: "var(--body)", fontWeight: 700, fontSize: 14, lineHeight: 1.1 }}>{it.name}</div>
-                    {it.sub && <div style={{ fontFamily: "var(--mono)", fontSize: 14, opacity: .65, marginTop: 4 }}>{it.sub}</div>}
+                    <div style={{ fontFamily: "var(--body)", fontWeight: 700, fontSize: 16, lineHeight: 1.1 }}>{it.name}</div>
+                    {it.sub && <div style={{ fontFamily: "var(--mono)", fontSize: 16, opacity: .65, marginTop: 4 }}>{it.sub}</div>}
                     <div style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 8 }}>
-                      <button aria-label={`Remove one ${it.name}`} onClick={() => onDecrement(it.key)} style={{ all: "unset", cursor: "pointer", width: 28, height: 28, borderRadius: 6, background: "var(--paper)", border: "1.5px solid var(--ink)", display: "grid", placeItems: "center", fontSize: 14 }}>−</button>
-                      <span style={{ fontFamily: "var(--mono)", fontSize: 14, minWidth: 18, textAlign: "center" }}>{it.qty}</span>
-                      <button aria-label={`Add one ${it.name}`} onClick={() => onIncrement(it.key)} style={{ all: "unset", cursor: "pointer", width: 28, height: 28, borderRadius: 6, background: "var(--paper)", border: "1.5px solid var(--ink)", display: "grid", placeItems: "center", fontSize: 14 }}>+</button>
+                      <button aria-label={`Remove one ${it.name}`} onClick={() => onDecrement(it.key)} style={{ all: "unset", cursor: "pointer", width: 28, height: 28, borderRadius: 6, background: "var(--paper)", border: "1.5px solid var(--ink)", display: "grid", placeItems: "center", fontSize: 16 }}>−</button>
+                      <span style={{ fontFamily: "var(--mono)", fontSize: 16, minWidth: 18, textAlign: "center" }}>{it.qty}</span>
+                      <button aria-label={`Add one ${it.name}`} onClick={() => onIncrement(it.key)} style={{ all: "unset", cursor: "pointer", width: 28, height: 28, borderRadius: 6, background: "var(--paper)", border: "1.5px solid var(--ink)", display: "grid", placeItems: "center", fontSize: 16 }}>+</button>
                     </div>
                   </div>
                   <div style={{ fontFamily: "var(--display)", fontSize: 22, lineHeight: 1 }}>
@@ -116,10 +116,10 @@ export function CartDrawer({ open, items, onClose, onIncrement, onDecrement }) {
           background: "var(--paper-2)",
           display: "flex", flexDirection: "column", gap: 12,
         }}>
-          <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".1em" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--mono)", fontSize: 16, letterSpacing: ".1em" }}>
             <span>SUBTOTAL</span><span>${subtotal.toFixed(2)}</span>
           </div>
-          <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".1em" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--mono)", fontSize: 16, letterSpacing: ".1em" }}>
             <span>HST (13%)</span><span>${tax.toFixed(2)}</span>
           </div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", paddingTop: 8, borderTop: "2px dashed var(--ink)" }}>
@@ -127,7 +127,7 @@ export function CartDrawer({ open, items, onClose, onIncrement, onDecrement }) {
             <span style={{ fontFamily: "var(--display)", fontSize: 36 }}>${total.toFixed(2)}</span>
           </div>
           {items.length > 0 && (
-            <div style={{ padding: 12, background: "var(--schmear)", border: "2px solid var(--ink)", borderRadius: 8, fontSize: 14, lineHeight: 1.35 }}>
+            <div style={{ padding: 12, background: "var(--schmear)", border: "2px solid var(--ink)", borderRadius: 8, fontSize: 16, lineHeight: 1.35 }}>
               <strong>Your ticket is saved on this device.</strong> Clover Online Ordering opens separately and cannot receive these selections automatically.
             </div>
           )}

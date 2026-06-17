@@ -4,19 +4,63 @@ import { BRAND, BRAND_ASSETS } from "../brand.js";
 import { DELIVERY_URL, ORDER_URL } from "../order.js";
 
 const SITE_NAV = [
-  ["Home", "/"],
-  ["About", "/about"],
-  ["Menu", "/menu"],
-  ["Catering", "/catering"],
-  ["Contact", "/contact"],
+  {
+    label: "Home",
+    href: "/",
+    children: [
+      ["Featured Menu", "/#featured-menu"],
+      ["Catering", "/#catering-preview"],
+      ["Visit", "/#visit"],
+      ["FAQ", "/#faq"],
+    ],
+  },
+  {
+    label: "About",
+    href: "/about",
+    children: [
+      ["Our Story", "/about#our-story"],
+      ["NYC Difference", "/about#nyc-bagel-difference"],
+      ["FAQ", "/about#faq"],
+    ],
+  },
+  {
+    label: "Menu",
+    href: "/menu",
+    children: [
+      ["Bagels & Spreads", "/menu#menu-bagels"],
+      ["Breakfast & Lunch", "/menu#menu-sandwiches"],
+      ["Drinks", "/menu#menu-drinks"],
+      ["Pastries", "/menu#menu-pastries"],
+      ["Gallery", "/menu#gallery"],
+    ],
+  },
+  {
+    label: "Catering",
+    href: "/catering",
+    children: [
+      ["Popular Platters", "/catering#popular-platters"],
+      ["Corporate", "/catering#corporate-catering"],
+      ["Events", "/catering#event-catering"],
+      ["Inquiry", "/catering#catering-form"],
+      ["FAQ", "/catering#faq"],
+    ],
+  },
+  {
+    label: "Contact",
+    href: "/contact",
+    children: [
+      ["Hours & Location", "/contact#hours-location"],
+      ["Contact Form", "/contact#contact-form"],
+    ],
+  },
 ];
 
 const LANDING_NAV = [
-  ["Bagels", "#menu"],
-  ["Sandwiches", "#sandwiches"],
-  ["Catering", "#catering"],
-  ["Our Story", "#story"],
-  ["Find Us", "#locations"],
+  { label: "Bagels", href: "#menu" },
+  { label: "Sandwiches", href: "#sandwiches" },
+  { label: "Catering", href: "#catering" },
+  { label: "Our Story", href: "#story" },
+  { label: "Find Us", href: "#locations" },
 ];
 
 function HeaderCta({ href, children, primary = false }) {
@@ -61,15 +105,26 @@ export function TopBar({ cartCount = 0, onCartClick, landing = false }) {
 
         {!isCompact && (
           <nav className="site-header__nav" aria-label="Main navigation">
-            {nav.map(([label, href]) => (
-              <a key={label} href={href}>{label}</a>
+            {nav.map((item) => (
+              <div className="site-header__nav-item" key={item.label}>
+                <a href={item.href} aria-haspopup={item.children?.length ? "true" : undefined}>
+                  {item.label}
+                </a>
+                {item.children?.length > 0 && (
+                  <div className="site-header__dropdown" aria-label={`${item.label} sections`}>
+                    {item.children.map(([label, href]) => (
+                      <a key={label} href={href}>{label}</a>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
           </nav>
         )}
 
         <div className="site-header__actions">
-          {!isCompact && <HeaderCta href={DELIVERY_URL}>Order Delivery</HeaderCta>}
           {!isCompact && <HeaderCta href={ORDER_URL} primary>Order Online</HeaderCta>}
+          {!isCompact && <HeaderCta href={DELIVERY_URL}>Order Delivery</HeaderCta>}
           {landing && (
             <button className="header-cart" onClick={onCartClick} aria-label="View order">
               <span>Ticket</span>
@@ -93,10 +148,21 @@ export function TopBar({ cartCount = 0, onCartClick, landing = false }) {
 
       {isCompact && menuOpen && (
         <nav className="site-header__mobile" aria-label="Mobile navigation">
-          {nav.map(([label, href]) => (
-            <a key={label} href={href} onClick={() => setMenuOpen(false)}>
-              {label}
-            </a>
+          {nav.map((item) => (
+            <div className="site-header__mobile-group" key={item.label}>
+              <a href={item.href} onClick={() => setMenuOpen(false)}>
+                {item.label}
+              </a>
+              {item.children?.length > 0 && (
+                <div className="site-header__mobile-subnav">
+                  {item.children.map(([label, href]) => (
+                    <a key={label} href={href} onClick={() => setMenuOpen(false)}>
+                      {label}
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
           ))}
           <div className="site-header__mobile-ctas">
             <HeaderCta href={ORDER_URL} primary>Order Online</HeaderCta>

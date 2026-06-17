@@ -1,4 +1,5 @@
 const W = "https://static.wixstatic.com/media/";
+const SHOOT = "/assets/photoshoot/";
 
 const sized = (id, w = 1200) => {
   const m = id.match(/_d_(\d+)_(\d+)_/);
@@ -6,6 +7,8 @@ const sized = (id, w = 1200) => {
   const h = Math.round(w * ratio);
   return `${W}${id}/v1/fill/w_${w},h_${h},q_90,enc_avif,quality_auto/${id}`;
 };
+
+const shot = (file) => `${SHOOT}${file}`;
 
 export const PHOTOS = {
   bagelHero:   sized("88e84c_073feaa2390445f79dad02f5c1c7a992~mv2_d_5184_3456_s_4_2.jpg", 900),
@@ -29,4 +32,16 @@ export const PHOTOS = {
   sandwich3:   sized("88e84c_96e3d518fbb7469d8ef532397f52f908~mv2.jpg", 800),
   sandwich4:   sized("88e84c_2cbf92b591754e739b154326e8331619~mv2.jpg", 700),
   sandwich5:   sized("88e84c_d0234119f3d74c3eb8b03304aecf7807~mv2.jpg", 800),
+  shootHero: shot("aa6f8285-a8f1-4a27-b83f-22dd9837d791_bubbys new york bagels bathurst st_Hero.jpg"),
+  shootBreakfast: shot("aa6f8285-a8f1-4a27-b83f-22dd9837d791_bubbys new york bagels bathurst st_Food_breakfast_sandwich_4x3.jpg"),
+  shootAvocado: shot("aa6f8285-a8f1-4a27-b83f-22dd9837d791_bubbys new york bagels bathurst st_Food_avocado_bagel_4x3.jpg"),
+  shootLox: shot("aa6f8285-a8f1-4a27-b83f-22dd9837d791_bubbys new york bagels bathurst st_Food_lox_and_cream_cheese_4x3.jpg"),
+  shootPizza: shot("aa6f8285-a8f1-4a27-b83f-22dd9837d791_bubbys new york bagels bathurst st_Food_pizza_bagel_4x3.jpg"),
+  shootMorningWrap: shot("aa6f8285-a8f1-4a27-b83f-22dd9837d791_bubbys new york bagels bathurst st_Food_morning_wrap_4x3.jpg"),
+  shootDeluxeClub: shot("aa6f8285-a8f1-4a27-b83f-22dd9837d791_bubbys new york bagels bathurst st_Food_deluxe_club_sandwich_4x3.jpg"),
+  shootTuna: shot("aa6f8285-a8f1-4a27-b83f-22dd9837d791_bubbys new york bagels bathurst st_Food_tuna_sandwich_4x3.jpg"),
+  shootTunisian: shot("aa6f8285-a8f1-4a27-b83f-22dd9837d791_bubbys new york bagels bathurst st_Food_tunisian_sandwich_4x3.jpg"),
+  shootCoffee: shot("aa6f8285-a8f1-4a27-b83f-22dd9837d791_bubbys new york bagels bathurst st_Food_all_day_special_4x3.jpg"),
+  shootPastry: shot("aa6f8285-a8f1-4a27-b83f-22dd9837d791_bubbys new york bagels bathurst st_Food_cheese_danish_4x3.jpg"),
+  shootMuffin: shot("aa6f8285-a8f1-4a27-b83f-22dd9837d791_bubbys new york bagels bathurst st_Food_muffin_4x3.jpg"),
 };

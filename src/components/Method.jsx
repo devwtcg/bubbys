@@ -1,4 +1,4 @@
-ï»¿import React from "react";
+import React from "react";
 import { Bagel, SectionHeader } from "./atoms.jsx";
 import { BubbySays } from "./fun.jsx";
 import { useIsMobile } from "../hooks/useIsMobile.js";
@@ -27,7 +27,7 @@ function MethodCard({ num, title, time, body, accent, illustration }) {
       {illustration}
 
       <div style={{
-        fontFamily: "var(--mono)", fontSize: 14,
+        fontFamily: "var(--mono)", fontSize: 16,
         letterSpacing: ".18em", textTransform: "uppercase",
         color: "var(--lox-deep)",
       }}>{time}</div>
@@ -51,13 +51,13 @@ export function Method() {
       <div className="wrap">
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: isMobile ? 48 : 70, gap: 32, flexWrap: "wrap" }}>
           <SectionHeader
-            num="NÂ° 02"
+            num="N° 02"
             kicker="The Old-School Way"
             title={<>Three steps,<br/>zero shortcuts.</>}
           />
           <BubbySays color="var(--lox)" tilt={3} tail="bl" style={{ maxWidth: 320 }}>
             "If it doesn't take all day, it isn't a real bagel."<br/>
-            <span style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".14em", textTransform: "uppercase", display: "inline-block", marginTop: 8 }}>â€” a thing Bubby probably said</span>
+            <span style={{ fontFamily: "var(--mono)", fontSize: 16, letterSpacing: ".14em", textTransform: "uppercase", display: "inline-block", marginTop: 8 }}>— a thing Bubby probably said</span>
           </BubbySays>
         </div>
 
@@ -68,10 +68,10 @@ export function Method() {
         }}>
           <MethodCard
             num="1"
-            time="36 hours Â· slow ferment"
+            time="36 hours · slow ferment"
             title="Cold Proof"
             accent="var(--mustard)"
-            body="Flour, water, malt, a whisper of salt â€” and then we wait. A day and a half in the cold lets the dough develop its chew and that unmistakable tang you can't fake."
+            body="Flour, water, malt, a whisper of salt — and then we wait. A day and a half in the cold lets the dough develop its chew and that unmistakable tang you can't fake."
             illustration={
               <div style={{ height: 160, position: "relative", display: "grid", placeItems: "center" }}>
                 <div style={{
@@ -80,7 +80,7 @@ export function Method() {
                   boxShadow: "5px 5px 0 var(--ink)", position: "relative",
                 }}>
                   <div style={{ position: "absolute", top: 10, left: 10, right: 10, height: 50, border: "2.5px solid var(--ink)", borderRadius: 6, background: "var(--schmear)", display: "grid", placeItems: "center" }}>
-                    <span style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".1em" }}>4Â°C</span>
+                    <span style={{ fontFamily: "var(--mono)", fontSize: 16, letterSpacing: ".1em" }}>4°C</span>
                   </div>
                   <div style={{ position: "absolute", bottom: 10, left: 10, right: 10, top: 70, border: "2.5px solid var(--ink)", borderRadius: 6, background: "var(--schmear)", display:"grid", placeItems:"center" }}>
                     <div style={{ display:"flex", gap:6 }}>
@@ -97,7 +97,7 @@ export function Method() {
 
           <MethodCard
             num="2"
-            time="60 seconds Â· rolling boil"
+            time="60 seconds · rolling boil"
             title="Kettle Boil"
             accent="var(--lox)"
             body="Honey-sweetened water, big bubbles. A short, sharp dunk locks in the chew and gives every bagel that glossy, golden crust. No steam injection. No shortcuts."
@@ -127,7 +127,7 @@ export function Method() {
 
           <MethodCard
             num="3"
-            time="14 minutes Â· 500Â°F"
+            time="14 minutes · 500°F"
             title="Stone-Deck Bake"
             accent="var(--pickle)"
             body="Onto wooden burlap boards, into a stone-deck oven the way they've been doing it for a hundred years. Bottoms crisp, tops blister, the whole shop smells like Saturday morning."
@@ -175,15 +175,15 @@ export function Method() {
             ["INGREDIENTS", "Flour. Water. Malt. Salt. Yeast. Honey. That's it."],
             ["NO PRESERVATIVES", "Best within 24 hrs. Toast on day two. Bag for the freezer day three."],
             ["DAILY BAKE", "First batch out at 6:00 AM. Last batch when they're gone."],
-            ["WHOLESALE", "We supply 40+ cafÃ©s and restaurants across the GTA."],
+            ["WHOLESALE", "We supply 40+ cafés and restaurants across the GTA."],
           ].map(([k, v], i) => (
             <div key={k} style={{
               padding: "22px 24px",
               borderRight: !isMobile && i < 3 ? "2.5px dashed var(--ink)" : "none",
               borderBottom: isMobile && i < 3 ? "2.5px dashed var(--ink)" : "none",
             }}>
-              <div style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".18em", color: "var(--lox-deep)" }}>{k}</div>
-              <div style={{ marginTop: 8, fontSize: 15, lineHeight: 1.35 }}>{v}</div>
+              <div style={{ fontFamily: "var(--mono)", fontSize: 16, letterSpacing: ".18em", color: "var(--lox-deep)" }}>{k}</div>
+              <div style={{ marginTop: 8, fontSize: 16, lineHeight: 1.35 }}>{v}</div>
             </div>
           ))}
         </div>

@@ -97,11 +97,12 @@ export function CurvedText({ text, size = 200, radius = 80, color = "var(--ink)"
 }
 
 export function SectionHeader({ num, kicker, title, lede, align = "left" }) {
+  const alignedSelf = align === "center" ? "center" : "flex-start";
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 18, textAlign: align }}>
-      {kicker && <Eyebrow num={num}>{kicker}</Eyebrow>}
-      <h2 className="h-section" style={{ alignSelf: align === "center" ? "center" : "flex-start", maxWidth: 1100 }}>{title}</h2>
-      {lede && <p style={{ maxWidth: 640, alignSelf: align === "center" ? "center" : "flex-start", fontSize: 19, lineHeight: 1.45, margin: 0 }}>{lede}</p>}
+      {kicker && <div style={{ alignSelf: alignedSelf }}><Eyebrow num={num}>{kicker}</Eyebrow></div>}
+      <h2 className="h-section" style={{ alignSelf: alignedSelf, maxWidth: 1100 }}>{title}</h2>
+      {lede && <p style={{ maxWidth: 640, alignSelf: alignedSelf, fontSize: 19, lineHeight: 1.45, margin: 0 }}>{lede}</p>}
     </div>
   );
 }

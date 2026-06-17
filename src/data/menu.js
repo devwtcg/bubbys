@@ -92,3 +92,45 @@ export const SANDWICHES = [
     kind: "fish",
   },
 ];
+
+export const DRINKS = [
+  {
+    id: "espresso",
+    name: "Espresso",
+    desc: "Hot espresso.",
+    price: 4,
+  },
+  {
+    id: "americano",
+    name: "Americano",
+    desc: "Hot Americano.",
+    price: 4,
+  },
+  {
+    id: "cappuccino",
+    name: "Cappuccino",
+    desc: "Classic cappuccino.",
+    price: 4,
+  },
+  {
+    id: "iced-coffee",
+    name: "Iced Coffee / Decaf / Hazelnut",
+    desc: "Cold coffee options.",
+    price: 5,
+  },
+  {
+    id: "iced-mochachino",
+    name: "Iced Mochachino",
+    desc: "Cold mochachino.",
+    price: 5,
+  },
+];
+
+export const PASTRIES = [
+  {
+    id: "breakfast-pastries",
+    name: "Breakfast Pastries",
+    desc: "Muffins, scones, croissants, and apple millefeuille by artisan bakery Tisserie.",
+    price: 9,
+  },
+];

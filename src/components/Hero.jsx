@@ -53,7 +53,7 @@ export function Hero() {
               style={{
                 display: "inline-flex", alignItems: "center", gap: 8,
                 padding: "6px 12px", background: openColor, color: "var(--paper)",
-                fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".18em", textTransform: "uppercase",
+                fontFamily: "var(--mono)", fontSize: 16, letterSpacing: ".18em", textTransform: "uppercase",
                 border: "2px solid var(--ink)", borderRadius: 4,
                 boxShadow: "3px 3px 0 var(--ink)",
                 whiteSpace: "nowrap",
@@ -71,7 +71,7 @@ export function Hero() {
               )}
             </span>
           </div>
-          <div style={{ fontFamily: "var(--mono)", fontSize: 14, letterSpacing: ".18em", textTransform: "uppercase" }}>
+          <div style={{ fontFamily: "var(--mono)", fontSize: 16, letterSpacing: ".18em", textTransform: "uppercase" }}>
             EST. 2011 · TORONTO · ONT
           </div>
         </div>
@@ -194,7 +194,7 @@ export function Hero() {
                     minWidth: isMobile ? "auto" : 90,
                   }}>{n}</div>
                   <div style={{
-                    fontFamily: "var(--mono)", fontSize: 14,
+                    fontFamily: "var(--mono)", fontSize: 16,
                     letterSpacing: ".14em", textTransform: "uppercase",
                     whiteSpace: "pre-line", lineHeight: 1.2,
                   }}>{l}</div>
