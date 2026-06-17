@@ -45,6 +45,29 @@ const menuCategoryPhotos = {
   pastries: PHOTOS.shootPastry,
 };
 
+const nycDifferenceSteps = [
+  {
+    num: "01",
+    title: "Cold-proofed dough",
+    body: "Time builds flavour before the bagel ever hits the kettle.",
+  },
+  {
+    num: "02",
+    title: "Kettle-boiled texture",
+    body: "A proper boil sets the shiny crust and dense New York chew.",
+  },
+  {
+    num: "03",
+    title: "Stone-deck baked",
+    body: "High heat finishes the outside while keeping the middle tender.",
+  },
+  {
+    num: "04",
+    title: "Fresh daily",
+    body: "Made for the counter, the schmear, and the same-day bite.",
+  },
+];
+
 export const META = {
   "/": {
     title: "Bubby's Bagels Toronto | Authentic NYC Bagels",
@@ -743,19 +766,42 @@ export function AboutPage() {
       />
       <section id="nyc-bagel-difference" className="simple-section surface-cream section--process">
         <div className="wrap">
-          <SectionHeader
-            kicker="The NYC bagel difference"
-            title={<>Cold-proofed. Kettle-boiled. Stone-deck baked.</>}
-            lede="A proper bagel is not just bread with a hole. The process builds the shiny crust, dense chew, and fresh-baked finish."
-          />
-          <div className="feature-grid">
-            {["Cold-proofed dough", "Kettle-boiled texture", "Stone-deck baking", "Fresh daily"].map((item) => (
-              <article className="feature-card" key={item}>
-                <Bagel variant="everything" size={98} />
-                <h3>{item}</h3>
-                <p>Old-school process, made practical for breakfast, lunch, and catering in Toronto.</p>
+          <div className="nyc-difference">
+            <div className="nyc-difference__intro">
+              <Eyebrow>The NYC bagel difference</Eyebrow>
+              <h2 className="h-section">Not bread with a hole. A whole ritual.</h2>
+              <p>A regular shortcut bagel can eat soft and bready. Bubby's leans old-school New York: slow dough, kettle boil, stone-deck heat, and a fresh same-day finish.</p>
+              <Sticker color="var(--accent-secondary)" tilt={-3}>dense chew, shiny crust</Sticker>
+            </div>
+            <div className="nyc-difference__machine">
+              <div className="nyc-difference__dial" aria-hidden="true">
+                <StarBurst className="nyc-difference__seal" color="var(--accent-secondary)" size={118} />
+                <span className="nyc-difference__seal-text">NYC<br />method</span>
+                <Bagel variant="everything" size={220} className="nyc-difference__hero-bagel" />
+                <div className="nyc-difference__callout">Boil first.<br />Bake hot.</div>
+              </div>
+              <ol className="nyc-difference__steps">
+                {nycDifferenceSteps.map((step) => (
+                  <li className="nyc-difference__step" key={step.num}>
+                    <span>{step.num}</span>
+                    <h3>{step.title}</h3>
+                    <p>{step.body}</p>
+                  </li>
+                ))}
+              </ol>
+            </div>
+            <div className="nyc-difference__compare" aria-label="Bagel method comparison">
+              <article className="nyc-difference__ticket nyc-difference__ticket--plain">
+                <span>regular shortcut</span>
+                <h3>Soft, bready, forgettable.</h3>
+                <p>Fast dough skips the texture work, so the bagel lands closer to a roll.</p>
               </article>
-            ))}
+              <article className="nyc-difference__ticket nyc-difference__ticket--bubbys">
+                <span>Bubby's New York</span>
+                <h3>Chewy, glossy, built for schmear.</h3>
+                <p>The cold proof, kettle boil, and stone-deck bake do the heavy lifting.</p>
+              </article>
+            </div>
           </div>
         </div>
       </section>
