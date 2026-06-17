@@ -48,20 +48,23 @@ const menuCategoryPhotos = {
 const nycDifferenceSteps = [
   {
     num: "01",
-    title: "Chewy texture",
-    method: "Cold proofed",
+    title: "Cold proofed",
+    outcome: "Chewy texture",
+    visual: "proof",
     body: "Slow proofing develops the dough before it hits the kettle, giving every bagel its dense New York bite.",
   },
   {
     num: "02",
-    title: "Fresh daily",
-    method: "Kettle boiled",
+    title: "Kettle boiled",
+    outcome: "Fresh daily",
+    visual: "kettle",
     body: "A proper boil sets the crust, then the bake finishes the bagel for the counter, the schmear, and same-day eating.",
   },
   {
     num: "03",
-    title: "Old-school process",
-    method: "Stone-deck baked",
+    title: "Stone-deck baked",
+    outcome: "Old-school process",
+    visual: "oven",
     body: "High heat brings the glossy outside and tender middle that separates a real NYC bagel from a soft roll.",
   },
 ];
@@ -772,17 +775,18 @@ export function AboutPage() {
             </div>
             <div className="nyc-difference__board">
               <figure className="nyc-difference__photo">
-                <img src={PHOTOS.shootHero} alt="Fresh New York style bagels from Bubby's Bagels" />
+                <img src={PHOTOS.bagelClose} alt="Close-up of a fresh New York style bagel from Bubby's Bagels" />
                 <figcaption>Real bagels. Real process.</figcaption>
               </figure>
               <div className="nyc-difference__process-card">
                 <div className="nyc-difference__badge">Bubby's process counter</div>
                 <ol className="nyc-difference__steps" aria-label="Bubby's New York bagel process">
                   {nycDifferenceSteps.map((step) => (
-                    <li className="nyc-difference__step" key={step.num}>
+                    <li className={`nyc-difference__step nyc-difference__step--${step.visual}`} key={step.num}>
                       <span className="nyc-difference__num">{step.num}</span>
                       <div>
-                        <span className="nyc-difference__method">{step.method}</span>
+                        <span className="nyc-difference__outcome">{step.outcome}</span>
+                        <span className="nyc-difference__icon" aria-hidden="true" />
                         <h3>{step.title}</h3>
                         <p>{step.body}</p>
                       </div>
